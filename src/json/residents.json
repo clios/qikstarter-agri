@@ -1,0 +1,31 @@
+{
+  "data": {
+    "total_count": 2,
+    "records": [
+      {
+        "id": 1,
+        "name": "CLIEMTOR B. FABROS",
+        "birthday": "1995-12-08T00:00:00",
+        "age": 26,
+        "sex": "male",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 2,
+        "name": "LYNTOR PAUL G. FIGUEROA",
+        "birthday": "1995-08-24T00:00:00",
+        "age": 26,
+        "sex": "male",
+        "barangay": "ZAMORA",
+        "municipality": "CABARROGUIS",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      }
+    ]
+  }
+}

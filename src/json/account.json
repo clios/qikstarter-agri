@@ -1,0 +1,17 @@
+{
+  "data": {
+    "name": "CLIEMTOR B. FABROS",
+    "email": "cliemtor@devhaus.ph",
+    "position": "SYSTEM ADMINISTRATOR",
+    "inactive": false,
+    "confirmed": true,
+    "office": "DEVHAUS TECHNOLOGIES",
+    "vicinity_barangay": "",
+    "vicinity_municipality": "",
+    "vicinity_province": "QUIRINO",
+    "permissions": ["read_user", "write_user", "read_resident", "write_resident", "read_dashboard", "read_map"],
+    "created_at": "2021-11-05T06:11:56.926268Z",
+    "updated_at": "2021-11-05T06:11:56.926268Z"
+  }
+}
+  

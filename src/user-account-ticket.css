@@ -1,0 +1,36 @@
+.uat {
+  width: min-content;
+  padding: 1rem;
+  border: 2px solid #000000;
+  border-radius: 0.3rem;
+  color: #000000;
+  background-color: #ffffff;
+  user-select: none;
+}
+
+.uat-title {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  border-bottom: 2px solid hsla(39, 75%, 50%, 1);
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+
+.uat-subtitle {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.uat-item {
+  line-height: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.uat-note {
+  width: 300px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1rem;
+}

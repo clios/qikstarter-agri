@@ -1,0 +1,28 @@
+.fpdtppc {
+  grid-column: 2/3;
+  align-self: center;
+  padding-top: 4rem;
+  text-align: center;
+}
+
+.fpdtppc-title {
+  color: #df9c20;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.fpdtppc-subtitle {
+  margin-bottom: 0.5rem;
+}
+
+.fpdtppc-value {
+  margin-top: 0.5rem;
+  color: #df9c20;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+}
+
+.fpdtppc-label {
+  font-size: 1rem;
+  line-height: 1rem;
+}

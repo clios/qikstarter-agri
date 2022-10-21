@@ -1,0 +1,10 @@
+.page-title {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.page-title h1 {
+  margin-bottom: 0.4rem;
+}

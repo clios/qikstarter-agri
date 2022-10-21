@@ -1,0 +1,282 @@
+{
+  "data": {
+    "total_count": 25,
+    "records": [
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 1,
+        "incident_at": "1995-12-08T00:00:00",
+        "name": "VEHICULAR ACCIDENT",
+        "type": "TRAUMA",
+        "barangay": "MAGSAYSAY",
+        "municipality": "SAGUDAY",
+        "province": "QUIRINO",
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      }
+    ]
+  }
+}

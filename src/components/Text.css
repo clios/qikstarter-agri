@@ -1,0 +1,31 @@
+.text {
+  font-size: 1rem;
+}
+
+.text-total {
+  border-top: 1px solid #73858c;
+  width: 100%;
+}
+
+.text.size-one {
+  font-size: 1rem;
+}
+
+.size-one-point-three {
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+
+.text.size-two {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.text.size-three {
+  font-size: 3rem;
+  line-height: 3rem;
+}
+
+.text.italic {
+  font-style: italic;
+}

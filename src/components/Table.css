@@ -1,0 +1,35 @@
+.table-custom {
+  text-align: center;
+  width: 100%;
+  background-color: hsl(195, 11%, 15%, 0.4);
+}
+
+.table-custom thead {
+  position: sticky;
+  top: 2.3rem;
+  background-color: #171b1c;
+  box-shadow: 0 0.1rem #df9c20;
+}
+
+.table-custom tr {
+  border-bottom: 1px solid hsla(197, 10%, 50%, 1);
+  transition: all 300ms ease;
+}
+
+.table-custom tbody tr:hover {
+  background-color: hsla(197, 40%, 20%, 1);
+  color: #20a8df;
+  cursor: pointer;
+}
+
+.table-custom.table-custom-off-hover tbody tr:hover {
+  background-color: inherit;
+  color: inherit;
+  cursor: default;
+}
+
+.table-custom.no-click tbody tr:hover {
+  background-color: #ffffff;
+  color: #22282a;
+  cursor: default;
+}

@@ -1,0 +1,42 @@
+.section-header {
+  display: grid;
+  padding: 2rem 2rem 0.75rem 2rem;
+  background-color: hsl(195, 11%, 10%, 0.5);
+}
+
+.section-header-big-title {
+  font-size: 1.5rem;
+  align-self: center;
+  text-decoration: underline;
+  text-decoration-color: #df9c20;
+}
+
+.section-header-title {
+  font-size: 1.3rem;
+  align-self: center;
+}
+
+.section-header-subtitle {
+  display: block;
+  color: hsla(197, 10%, 90%, 1);
+  font-weight: normal;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.section-header-error {
+  display: block;
+  font-weight: normal;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.section-header-toolbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.section-header-tools {
+  display: flex;
+  justify-self: end;
+}

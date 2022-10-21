@@ -1,0 +1,15 @@
+.empty-table {
+  display: grid;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.empty-table img {
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+
+.empty-table p {
+  text-align: center;
+}

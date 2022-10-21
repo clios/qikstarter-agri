@@ -1,0 +1,19 @@
+.dashboard-toolbar-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid hsla(197, 10%, 50%, 1);
+}
+
+.dashboard-toolbar {
+  display: flex;
+  column-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-toolbar-button {
+  justify-self: right;
+  align-self: center;
+}

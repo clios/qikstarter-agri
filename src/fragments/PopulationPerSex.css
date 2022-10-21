@@ -1,0 +1,10 @@
+.population-per-sex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2rem;
+  margin: 2rem;
+}
+
+.population-per-sex > div {
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0.16), 0 3px 6px rgba(255, 255, 255, 0.23);
+}

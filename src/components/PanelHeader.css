@@ -1,0 +1,11 @@
+.panel-header {
+  margin-bottom: 2rem;
+}
+
+.panel-header-title {
+  border-bottom: 1px solid #bbbbbb;
+}
+
+.panel-header-label {
+  font-size: 0.8rem;
+}

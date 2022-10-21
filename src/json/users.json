@@ -1,0 +1,35 @@
+{
+  "data": {
+    "total_count": 2,
+    "records": [
+      {
+        "id": 1,
+        "name": "CLIEMTOR B. FABROS",
+        "email": "cliemtor@devhaus.ph",
+        "position": "SYSTEM ADMINISTRATOR",
+        "inactive": false,
+        "office_name": "DEVHAUS TECHNOLOGIES",
+        "vicinity_barangay": "",
+        "vicinity_municipality": "",
+        "vicinity_province": "QUIRINO",
+        "permissions": ["read_users", "write_users", "read_tasks", "write_tasks", "read_dashboard", "read_map"],
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      },
+      {
+        "id": 2,
+        "name": "LYNTOR PAUL G. FIGUEROA",
+        "email": "lyntor@devhaus.ph",
+        "position": "SYSTEM ADMINISTRATOR",
+        "inactive": true,
+        "office_name": "DEVHAUS TECHNOLOGIES",
+        "vicinity_barangay": "",
+        "vicinity_municipality": "SAGUDAY",
+        "vicinity_province": "QUIRINO",
+        "permissions": ["read_users", "write_users", "read_tasks", "write_tasks", "read_dashboard", "read_map"],
+        "created_at": "2021-11-05T06:11:56.926268Z",
+        "updated_at": "2021-11-05T06:11:56.926268Z"
+      }
+    ]
+  }
+}

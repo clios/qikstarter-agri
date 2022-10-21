@@ -1,0 +1,15 @@
+.psal-row-one {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  padding-top: 2rem;
+}
+
+.psal-row-two {
+  display: grid;
+  padding: 2rem 0;
+}
+
+.psal-row-three {
+  display: grid;
+  padding: 2rem 0;
+}

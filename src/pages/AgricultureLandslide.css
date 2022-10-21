@@ -1,0 +1,12 @@
+.pal-row-one {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  padding-top: 2rem;
+}
+
+.pal-row-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}

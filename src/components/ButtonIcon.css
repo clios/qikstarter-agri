@@ -1,0 +1,18 @@
+.button.is-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+}
+
+.button.is-icon svg {
+  display: inline;
+}
+
+.button-icon-label {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  white-space: nowrap;
+  cursor: pointer;
+}

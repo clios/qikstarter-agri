@@ -1,0 +1,38 @@
+.panel {
+  /* padding: 0.5rem; */
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-x: auto;
+  /* background-color: hsl(192, 10%, 5%); */
+  /* border-right: 1px solid white; */
+}
+
+.panel-label {
+  margin-left: 1.2rem;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
+
+.panel-section {
+  margin-bottom: 2rem;
+}
+
+.panel {
+  background: linear-gradient(-45deg, hsl(136, 82%, 20%), hsl(226, 78%, 20%), hsl(196, 72%, 20%), hsl(166, 72%, 20%));
+  background-size: 1000% 1000%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

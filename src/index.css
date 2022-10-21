@@ -1,0 +1,128 @@
+body {
+  background-color: hsl(195, 10%, 10%);
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.map-container {
+  height: calc(100vh - 4.6rem);
+  width: 100%;
+}
+
+.map-container-family {
+  height: calc(100vh - 7rem);
+  width: 100%;
+}
+
+.map-container-family-update {
+  height: calc(100vh - 20.5rem);
+  width: 100%;
+}
+
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+
+/* LEGENDS FOR DASHBOARD */
+
+.box-red {
+  background-color: #df2020;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+.box-orange {
+  background-color: #df9c20;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+.box-yellow {
+  background-color: #dfdf20;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+.box-green {
+  background-color: #20df20;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+.box-blue {
+  background-color: #20a8df;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+.box-indigo {
+  background-color: #d020df;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+.box-violet {
+  background-color: #df207c;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 auto 0 auto;
+}
+
+/* BODY GRADIENT */
+
+body {
+  background: linear-gradient(-45deg, hsl(136, 82%, 8%), hsl(226, 78%, 8%), hsl(196, 72%, 8%), hsl(166, 72%, 8%));
+  background-size: 1000% 1000%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* REMOVE LINK DECORATION */
+
+a:link {
+  text-decoration: none;
+}

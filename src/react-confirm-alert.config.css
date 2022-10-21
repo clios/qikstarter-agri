@@ -1,0 +1,20 @@
+.react-confirm-alert-overlay {
+  background-color: hsla(197, 10%, 10%, 0.7);
+}
+
+.react-confirm-alert-body {
+  box-shadow: none;
+  border-radius: 3px;
+  background-color: hsla(197, 10%, 20%, 1);
+  color: hsla(0, 0%, 100%, 1);
+}
+
+.react-confirm-alert-body > h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.react-confirm-alert-button-group button {
+  background-color: hsla(197, 10%, 10%, 1);
+  color: hsla(0, 0%, 100%, 1);
+}

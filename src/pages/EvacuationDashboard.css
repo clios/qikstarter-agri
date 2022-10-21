@@ -1,0 +1,5 @@
+.ped-row-one {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  margin-bottom: 4rem;
+}

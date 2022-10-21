@@ -1,0 +1,34 @@
+.faftc {
+  display: grid;
+  place-content: center;
+  text-align: center;
+  grid-column: 3 / 4;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.faftc-img {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+.faftc-1 {
+  color: #df9c20;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.faftc-2 {
+  font-size: 1rem;
+  line-height: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.faftc-3 {
+  color: #20a8df;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+}

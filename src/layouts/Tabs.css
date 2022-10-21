@@ -1,0 +1,61 @@
+.tabs {
+  display: grid;
+}
+
+.tabs-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  position: fixed;
+  top: 0;
+  padding-right: 3rem;
+  width: 100%;
+  z-index: 10;
+  background-color: hsl(192, 100%, 10%, 1);
+  border-bottom: 0.1rem solid #df9c20;
+}
+
+.tabs-title {
+  align-self: center;
+  padding-left: 1rem;
+  color: #20a8df;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #df9c20;
+}
+
+.tabs-title::first-letter {
+  color: #df9c20;
+}
+
+.tabs-system {
+  align-self: center;
+  justify-self: center;
+  color: #df9c20;
+}
+
+.tabs-content {
+  justify-self: end;
+  display: flex;
+  flex-direction: row;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.tabs-item {
+  display: block;
+  padding: 0.4rem 1.5rem 0.3rem 1.5rem;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 300ms ease;
+}
+
+.tabs-item:hover,
+.tabs-item:visited {
+  background-color: #df9c20;
+  cursor: pointer;
+}
+
+.tabs-item.active {
+  background-color: hsla(197, 75%, 50%, 0.3);
+  border-bottom: 0.23rem solid hsl(39, 75%, 50%);
+}

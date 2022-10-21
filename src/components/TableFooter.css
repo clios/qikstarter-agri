@@ -1,0 +1,21 @@
+.table-footer {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  width: 100%;
+  height: 100%;
+  background-color: #171b1c;
+  border-top: 0.1rem solid #df9c20;
+}
+
+.table-footer-desc {
+  align-self: center;
+  width: 100%;
+  text-align: center;
+}
+
+.table-footer .select select {
+  align-self: center;
+  height: 100%;
+}

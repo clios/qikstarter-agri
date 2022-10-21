@@ -1,0 +1,39 @@
+.frlfrlt {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-bottom: 4rem;
+  font-size: 1.2rem;
+}
+
+.frlfrlt p {
+  color: #df9c20;
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 1.5rem;
+}
+
+.frlfrlt table {
+  margin: 1rem 2rem 2rem 2rem;
+  padding: 2rem;
+}
+
+.frlfrlt table th {
+  font-weight: 300;
+  padding: 0 1rem 0.5rem 1rem;
+}
+
+.frlfrlt table tr td {
+  padding: 0.2rem 1rem;
+}
+
+.frlfrlt table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.frlfrlt table .footer {
+  padding-top: 2rem;
+  font-size: 1rem;
+  border-bottom: none;
+}

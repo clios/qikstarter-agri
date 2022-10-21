@@ -1,0 +1,11 @@
+.react-loading-skeleton {
+  display: block;
+  --base-color: hsla(197, 20%, 50%, 0.5);
+  --highlight-color: hsla(197, 20%, 50%, 0.5);
+  background-color: hsla(197, 20%, 50%, 0.5);
+  border-radius: 0;
+}
+
+.react-loading-skeleton + br {
+  display: none;
+}

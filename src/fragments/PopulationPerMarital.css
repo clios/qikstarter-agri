@@ -1,0 +1,4 @@
+.population-per-status {
+  display: flex;
+  gap: 1rem;
+}

@@ -1,0 +1,29 @@
+.panel-link {
+  display: block;
+  position: relative;
+  font-size: 0.8rem;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 300ms ease;
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.panel-link svg {
+  margin-bottom: 0.25rem;
+}
+
+.panel-link:hover,
+.panel-link:visited {
+  background-color: #20a9df;
+  cursor: pointer;
+}
+
+.panel-link.active {
+  background-color: rgba(32, 169, 223, 0.3);
+  border-left: 0.2rem solid #20a9df;
+}
+
+.panel-header-title .panel-link {
+  font-size: 1rem;
+}
