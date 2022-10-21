@@ -1,6 +1,6 @@
-# What is qikstarter?
+# What is qikstarter-agri?
 
-A demo kit for Quirino Province projects.
+A demo kit for Quirino Province Q-Agri MIS.
 
 _Note: Rename your repository and remove **.git** folder, then make your own initial commit._
 
@@ -9,13 +9,13 @@ _Note: Rename your repository and remove **.git** folder, then make your own ini
 1. Clone repository.
 
 ```
-git clone https://github.com/clios/qikstarter.git
+git clone https://github.com/clios/qikstarter-agri.git
 ```
 
-2. Go to **qikstarter** folder
+2. Go to **qikstarter-agri** folder
 
 ```
-cd qikstarter
+cd qikstarter-agri
 ```
 
 3. Install dependencies.
