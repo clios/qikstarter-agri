@@ -97,16 +97,16 @@ function YourAccountUpdate() {
           </SectionHeader>
           <SectionHeader title="1. Personal Information" />
           <FormRow>
-            <Field error={helper.name} label="Name" status={status}>
+            <Field label="Name" status={status}>
               <Input className="uppercase" onChange={(e) => setName(e.target.value)} size={20} type="text" value={name} />
             </Field>
-            <Field error={helper.email} label="Email" status={status}>
+            <Field label="Email" status={status}>
               <Input onChange={(e) => setEmail(e.target.value)} size={30} type="email" value={email} />
             </Field>
           </FormRow>
           <SectionHeader title="2. Security Password" subtitle="If you do not wish to change your password, just leave it blank." />
           <FormRow>
-            <Field error={helper.new_password} label="New password" status={status}>
+            <Field label="New password" status={status}>
               <Input
                 maxLength={255}
                 minLength={8}
@@ -145,9 +145,6 @@ function YourAccountUpdate() {
                 value={confirm_password}
               />
             </Field>
-          </FormRow>
-          <FormRow>
-            <Field error={helper.password} />
           </FormRow>
           <FormError error={error} />
           <FormFooter>
