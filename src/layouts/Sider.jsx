@@ -90,7 +90,7 @@ function Sider({ children }) {
                 <Identification24 />
               </PanelLink>
               <div className="panel-link" onClick={signOut} title="Sign Out">
-                <Power24 /> <p>Sign Out</p>
+                <Power24 />
               </div>
             </PanelSection>
           </Panel>
