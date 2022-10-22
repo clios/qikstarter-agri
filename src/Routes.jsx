@@ -32,7 +32,7 @@ import SettlementAreaTabs from './layouts/SettlementAreaTabs'
 import Sider from './layouts/Sider'
 import SignIn from './pages/SignIn'
 import UserCreate from './pages/UserCreate'
-import UserProfile from './pages/UserProfile'
+import UserInformation from './pages/UserInformation'
 import UserRecords from './pages/UserRecords'
 import UserTabs from './layouts/UserTabs'
 import UserUpdate from './pages/UserUpdate'
@@ -106,7 +106,7 @@ function Routes() {
         <UserTabs path="users">
           <UserRecords path="/records" />
           <UserCreate path="/records/add" />
-          <UserProfile path="/records/:user_id" />
+          <UserInformation path="/records/:user_id" />
           <UserUpdate path="/records/:user_id/edit" />
         </UserTabs>
       </Sider>

@@ -10,10 +10,8 @@ function FormError(props) {
     display && (
       <FadeAnimation>
         <div className="form-error">
-          <div className="title text-red">INVALID</div>
-          <p className="uppercase">
-            {Object.keys(props.error)[0]}: {Object.values(props.error)[0]}.
-          </p>
+          <div className="title text-red">INVALID FORM</div>
+          <p>Please check your inputs.</p>
         </div>
       </FadeAnimation>
     )

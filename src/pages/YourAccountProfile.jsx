@@ -80,6 +80,14 @@ function YourAccountProfile() {
             </Field>
           </SectionBody>
           <SectionBody>
+            <Field label="Read Farm Records" status={status}>
+              <Toggle available={Help.checkPermission(permissions, 'read_farm') ? true : false} />
+            </Field>
+            <Field label="Write Farm Records" status={status}>
+              <Toggle available={Help.checkPermission(permissions, 'write_farm') ? true : false} />
+            </Field>
+          </SectionBody>
+          <SectionBody>
             <Field label="Read User Accounts" status={status}>
               <Toggle available={Help.checkPermission(permissions, 'read_user') ? true : false} />
             </Field>

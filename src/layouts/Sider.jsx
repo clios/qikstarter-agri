@@ -86,7 +86,7 @@ function Sider({ children }) {
               <PanelLink to="/evacuation" tooltip="Evacuation">
                 <HealthCross24 />
               </PanelLink>
-              <PanelLink to="/users" tooltip="User Accounts">
+              <PanelLink permission="read_user" permissions={Account.data.permissions} to="/users" tooltip="User Accounts">
                 <Identification24 />
               </PanelLink>
               <div className="panel-link" onClick={signOut} title="Sign Out">

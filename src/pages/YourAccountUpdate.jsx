@@ -78,8 +78,10 @@ function YourAccountUpdate() {
         setStatus('success')
 
         if (error.response) {
-          if (error.response?.status === 400) setError(error.response.data)
-          else if (error.response?.status === 403) toast.error('User credential is forbidden')
+          if (error.response?.status === 400) {
+            setHelper(error.response.data)
+            setError(error.response.data)
+          } else if (error.response?.status === 403) toast.error('User credential is forbidden')
           else if (error.response?.status === 500) toast.error('Unexpected server error')
         } else if (error.request) console.error(error.request)
         else console.error('Error', error.message)
@@ -97,16 +99,16 @@ function YourAccountUpdate() {
           </SectionHeader>
           <SectionHeader title="1. Personal Information" />
           <FormRow>
-            <Field label="Name" status={status}>
+            <Field error={helper.name} label="Name" status={status}>
               <Input className="uppercase" onChange={(e) => setName(e.target.value)} size={20} type="text" value={name} />
             </Field>
-            <Field label="Email" status={status}>
+            <Field error={helper.email} label="Email" status={status}>
               <Input onChange={(e) => setEmail(e.target.value)} size={30} type="email" value={email} />
             </Field>
           </FormRow>
           <SectionHeader title="2. Security Password" subtitle="If you do not wish to change your password, just leave it blank." />
           <FormRow>
-            <Field label="New password" status={status}>
+            <Field error={helper.password} label="New password" status={status}>
               <Input
                 maxLength={255}
                 minLength={8}
