@@ -72,9 +72,7 @@ function SignIn() {
           <img className="sign-in-image" src={require('../assets/sign_in_bg.svg')} alt="poster" />
           <form className="sign-in-form" onSubmit={submitForm}>
             {status === 'loading' && <Loader />}
-            <div className="sign-in-title text-orange">
-              Q-Agri MIS <p>{status}</p>{' '}
-            </div>
+            <div className="sign-in-title text-orange">Q-Agri MIS</div>
             <Field label="Email">
               <Input className="sign-in-input" onChange={(e) => setEmail(e.target.value)} required size="35" type="email" value={email} />
             </Field>
