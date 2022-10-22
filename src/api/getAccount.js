@@ -7,7 +7,7 @@ const fetcher = (url) =>
   axios
     .get(url, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('qikstarter-token')}`
+        Authorization: `Bearer ${localStorage.getItem('q-agri-web-token')}`
       }
     })
     .then((res) => res.data)

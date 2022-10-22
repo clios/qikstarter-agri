@@ -20,6 +20,7 @@ function Input(props) {
       type={props.type}
       value={props.value}
       autoFocus={props.autoFocus}
+      autoComplete={props.autoComplete}
     />
   )
 }

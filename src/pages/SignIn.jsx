@@ -1,5 +1,7 @@
 import './SignIn.css'
 
+import { Redirect, navigate } from '@reach/router'
+
 import Button from '../components/Button'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
@@ -8,7 +10,6 @@ import Loader from '../components/Loader'
 import React from 'react'
 import axios from 'axios'
 import getAccount from '../api/getAccount'
-import { navigate } from '@reach/router'
 import { toast } from 'react-toastify'
 
 function SignIn() {
@@ -26,13 +27,14 @@ function SignIn() {
 
   // ON FETCH ACCOUNT
   React.useEffect(() => {
+    if (!has_token) setStatus('success')
     if (has_token && Account.loading) setStatus('loading')
     if (Account.error) setStatus('error')
     if (Account.data) setStatus('success')
     return () => setStatus('loading')
   }, [Account.loading, Account.error, Account.data])
 
-  // SEND POST LOGIN REQUEST
+  // SEND SIGN IN REQUEST
   function submitForm(e) {
     e.preventDefault()
     setStatus('loading')
@@ -70,12 +72,15 @@ function SignIn() {
           <img className="sign-in-image" src={require('../assets/sign_in_bg.svg')} alt="poster" />
           <form className="sign-in-form" onSubmit={submitForm}>
             {status === 'loading' && <Loader />}
-            <div className="sign-in-title text-orange">Q-Agri MIS</div>
+            <div className="sign-in-title text-orange">
+              Q-Agri MIS <p>{status}</p>{' '}
+            </div>
             <Field label="Email">
               <Input className="sign-in-input" onChange={(e) => setEmail(e.target.value)} required size="35" type="email" value={email} />
             </Field>
             <Field error={helper} label="Password">
               <Input
+                autoComplete="on"
                 className="sign-in-input"
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyUp={(e) => (e.getModifierState('CapsLock') ? setHelper('⚠️ Caps Lock is on') : setHelper(''))}
