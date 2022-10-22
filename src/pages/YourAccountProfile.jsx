@@ -1,23 +1,24 @@
-import Account from '../json/account.json'
+import { Edit20, Information24 } from '@carbon/icons-react'
+
 import ButtonIcon from '../components/ButtonIcon'
-import { Edit20 } from '@carbon/icons-react'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
 import Help from '../Help'
 import PageContent from '../components/PageContent'
+import PaperView from '../components/PaperView'
 import React from 'react'
 import SectionBody from '../components/SectionBody'
 import SectionFooter from '../components/SectionFooter'
 import SectionHeader from '../components/SectionHeader'
+import Toggle from '../fragments/YourAccountInformation/Toggle'
 import getAccount from '../api/getAccount'
 import { navigate } from '@reach/router'
-import PaperView from '../components/PaperView'
 
 function YourAccountProfile() {
   // SEND GET ACCOUNT REQUEST
-  // const has_token = localStorage.getItem('qikstarter-drr-token') ? true : false
-  // const Account = getAccount(has_token)
-  // if (!has_token) return <Redirect to="/" noThrow replace />
+  const has_token = localStorage.getItem('q-agri-web-token') ? true : false
+  const Account = getAccount(has_token)
+  if (!has_token) return <Redirect to="/" noThrow replace />
 
   // INFORMATION STATE
   const [status, setStatus] = React.useState('success')
@@ -51,7 +52,7 @@ function YourAccountProfile() {
       <FadeAnimation>
         <PaperView>
           <SectionHeader bigTitle="Your Account Information">
-            <ButtonIcon onClick={() => navigate('/your-account/information/edit')} status={status} title="Edit your account">
+            <ButtonIcon onClick={() => navigate('/your-account/information/edit', { replace: true })} status={status} title="Edit your account">
               <Edit20 />
             </ButtonIcon>
           </SectionHeader>
@@ -65,22 +66,26 @@ function YourAccountProfile() {
             <Field label="Office" status={status} text={office} />
             <Field label="Position" status={status} text={position} />
           </SectionBody>
-          <SectionHeader title="3. Permissions" />
+          <SectionHeader title="3. Permissions">
+            <div title="Read means the user can search, view and download records. Write means the user can create, update and delete records.">
+              <Information24 />
+            </div>
+          </SectionHeader>
           <SectionBody>
-            <Field
-              label="Search and View Resident Records"
-              status={status}
-              text={Help.checkPermission(permissions, 'read_resident') ? 'YES' : 'NO'}
-            />
-            <Field
-              label="Add, Edit and Delete Resident Records"
-              status={status}
-              text={Help.checkPermission(permissions, 'write_resident') ? 'YES' : 'NO'}
-            />
+            <Field label="Read Farmer Records" status={status}>
+              <Toggle available={Help.checkPermission(permissions, 'read_farmer') ? true : false} />
+            </Field>
+            <Field label="Write Farmer Records" status={status}>
+              <Toggle available={Help.checkPermission(permissions, 'write_farmer') ? true : false} />
+            </Field>
           </SectionBody>
           <SectionBody>
-            <Field label="Search and View User Accounts" status={status} text={Help.checkPermission(permissions, 'read_user') ? 'YES' : 'NO'} />
-            <Field label="Add, Edit and Delete User Accounts" status={status} text={Help.checkPermission(permissions, 'write_user') ? 'YES' : 'NO'} />
+            <Field label="Read User Accounts" status={status}>
+              <Toggle available={Help.checkPermission(permissions, 'read_user') ? true : false} />
+            </Field>
+            <Field label="Write User Accounts" status={status}>
+              <Toggle available={Help.checkPermission(permissions, 'write_user') ? true : false} />
+            </Field>
           </SectionBody>
           <SectionFooter status={status}>Last Update {updated_at}</SectionFooter>
         </PaperView>

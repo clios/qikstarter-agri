@@ -9,10 +9,11 @@ function ButtonIcon(props) {
 
   const no_permission_required = Boolean(!props.permissions) && Boolean(!props.permission)
   const isPermitted = Help.checkPermission(props.permissions, props.permission)
+  const color = props.color ? `is-${props.color}` : 'is-blue'
 
   if (no_permission_required || isPermitted)
     return (
-      <div className={`button is-icon is-blue ${props.className}`} onClick={props.onClick} title={props.title}>
+      <div className={`button is-icon ${color} ${props.className}`} onClick={props.onClick} title={props.title}>
         {props.children}
         {props.label ? <label className="button-icon-label">{props.label}</label> : null}
       </div>

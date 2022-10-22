@@ -1,10 +1,10 @@
-import Account from '../json/account.json'
 import Button from '../components/Button'
 import ButtonIcon from '../components/ButtonIcon'
 import { Close20 } from '@carbon/icons-react'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
 import Form from '../components/Form'
+import FormError from '../components/FormError'
 import FormFooter from '../components/FormFooter'
 import FormRow from '../components/FormRow'
 import Input from '../components/Input'
@@ -18,14 +18,15 @@ import { toast } from 'react-toastify'
 
 function YourAccountUpdate() {
   // SEND GET ACCOUNT REQUEST
-  // const has_token = localStorage.getItem('qikstarter-drr-token') ? true : false
-  // const Account = getAccount(has_token)
-  // if (!has_token) return <Redirect to="/" noThrow replace />
+  const has_token = localStorage.getItem('q-agri-web-token') ? true : false
+  const Account = getAccount(has_token)
+  if (!has_token) return <Redirect to="/" noThrow replace />
 
   // INFORMATION STATE
   const [status, setStatus] = React.useState('loading')
   const [helper, setHelper] = React.useState({})
   const [password, setPassword] = React.useState(null)
+  const [error, setError] = React.useState({})
 
   // INPUT STATE: ACCOUNT
   const [name, setName] = React.useState('')
@@ -35,8 +36,8 @@ function YourAccountUpdate() {
 
   // ON ACCOUNT FETCH
   React.useEffect(() => {
-    // if (has_token && Account.loading) setStatus('loading')
-    // if (Account.error) setStatus('error')
+    if (has_token && Account.loading) setStatus('loading')
+    if (Account.error) setStatus('error')
 
     if (Account.data) {
       setStatus('success')
@@ -56,35 +57,33 @@ function YourAccountUpdate() {
       return
     }
 
-    // setStatus('loading')
-    // const URL = process.env.BASE_URL + '/account'
-    // const DATA = { email: email, name: name, password: password }
-    // const CONFIG = { headers: { Authorization: `Bearer ${localStorage.getItem('qikstarter-drr-token')}` } }
+    setStatus('loading')
+    const URL = process.env.BASE_URL + '/account'
+    const DATA = { email: email, name: name, password: password }
+    const CONFIG = { headers: { Authorization: `Bearer ${localStorage.getItem('q-agri-web-token')}` } }
 
-    // axios
-    //   .patch(URL, DATA, CONFIG)
-    //   .then((response) => {
-    //     if (response.status === 201) {
-    //       setStatus('success')
-    toast.success('Your account has been updated')
-    navigate('/your-account/information')
-    //   }
-    // })
-    // .catch((error) => {
-    //   setNewPassword('')
-    //   setConfirmPassword('')
-    //   setPassword(null)
-    //   setStatus('success')
+    axios
+      .patch(URL, DATA, CONFIG)
+      .then((response) => {
+        if (response.status === 201) {
+          setStatus('success')
+          toast.success('Your account has been updated')
+          navigate('/your-account/information', { replace: true })
+        }
+      })
+      .catch((error) => {
+        setNewPassword('')
+        setConfirmPassword('')
+        setPassword(null)
+        setStatus('success')
 
-    //   if (error.response) {
-    //     if (error.response?.status === 400) {
-    //       setHelper(error.response.data)
-    //       toast.error('Form input is invalid')
-    //     } else if (error.response?.status === 403) toast.error('User credential is forbidden')
-    //     else if (error.response?.status === 500) toast.error('Unexpected server error')
-    //   } else if (error.request) console.error(error.request)
-    //   else console.error('Error', error.message)
-    // })
+        if (error.response) {
+          if (error.response?.status === 400) setError(error.response.data)
+          else if (error.response?.status === 403) toast.error('User credential is forbidden')
+          else if (error.response?.status === 500) toast.error('Unexpected server error')
+        } else if (error.request) console.error(error.request)
+        else console.error('Error', error.message)
+      })
   }
 
   return (
@@ -92,7 +91,7 @@ function YourAccountUpdate() {
       <FadeAnimation>
         <Form status={status}>
           <SectionHeader bigTitle="Update Your Account">
-            <ButtonIcon onClick={() => navigate('/your-account/information')} status={status} title="Close this form">
+            <ButtonIcon color="red" onClick={() => navigate('/your-account/information')} status={status} title="Close this form">
               <Close20 />
             </ButtonIcon>
           </SectionHeader>
@@ -121,7 +120,7 @@ function YourAccountUpdate() {
                 }}
                 size={35}
                 type="password"
-                autocomplete
+                autoComplete="on"
                 value={new_password}
               />
             </Field>
@@ -142,7 +141,7 @@ function YourAccountUpdate() {
                 required={new_password ? true : false}
                 size={35}
                 type="password"
-                autocomplete
+                autoComplete="on"
                 value={confirm_password}
               />
             </Field>
@@ -150,6 +149,7 @@ function YourAccountUpdate() {
           <FormRow>
             <Field error={helper.password} />
           </FormRow>
+          <FormError error={error} />
           <FormFooter>
             <Button
               disabled={status === 'loading'}

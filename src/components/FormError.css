@@ -1,0 +1,8 @@
+.form-error {
+  padding: 2rem;
+  background-color: hsl(0, 75%, 50%, 0.1);
+}
+
+.form-error .title {
+  font-size: 1.3rem;
+}
