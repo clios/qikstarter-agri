@@ -3,8 +3,8 @@ import './SignIn.css'
 import Button from '../components/Button'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
-import Form from '../components/Form'
 import Input from '../components/Input'
+import Loader from '../components/Loader'
 import React from 'react'
 import axios from 'axios'
 import getAccount from '../api/getAccount'
@@ -17,7 +17,7 @@ function SignIn() {
   const Account = getAccount(has_token)
 
   // INFORMATION STATE
-  const [status, setStatus] = React.useState('success')
+  const [status, setStatus] = React.useState('loading')
   const [helper, setHelper] = React.useState('')
 
   // INPUT STATE
@@ -68,12 +68,13 @@ function SignIn() {
         {Account.data && <Redirect to="/settlement-area/landslide" noThrow replace />}
         <div className="sign-in-content">
           <img className="sign-in-image" src={require('../assets/sign_in_bg.svg')} alt="poster" />
-          <form className="sign-in-form" onSubmit={submitForm} status={status}>
+          <form className="sign-in-form" onSubmit={submitForm}>
+            {status === 'loading' && <Loader />}
             <div className="sign-in-title text-orange">Q-Agri MIS</div>
             <Field label="Email">
               <Input className="sign-in-input" onChange={(e) => setEmail(e.target.value)} required size="35" type="email" value={email} />
             </Field>
-            <Field label="Password" error={helper}>
+            <Field error={helper} label="Password">
               <Input
                 className="sign-in-input"
                 onChange={(e) => setPassword(e.target.value)}
