@@ -8,6 +8,11 @@ import EvacuationCenterMap from './pages/EvacuationCenterMap'
 import EvacuationCenterRecords from './pages/EvacuationCenterRecords'
 import EvacuationDashboard from './pages/EvacuationDashboard'
 import EvacuationTabs from './layouts/EvacuationTabs'
+import FarmerCreate from './pages/FarmerCreate'
+import FarmerInformation from './pages/FarmerInformation'
+import FarmerRecords from './pages/FarmerRecords'
+import FarmerTabs from './layouts/FarmerTabs'
+import FarmerUpdate from './pages/FarmerUpdate'
 import IncidentCreate from './pages/IncidentCreate'
 import IncidentDashboard from './pages/IncidentDashboard'
 import IncidentInformation from './pages/IncidentInformation'
@@ -101,6 +106,14 @@ function Routes() {
           <ResidentUpdate path="/records/:resident_id/edit" />
           <ResidentMap path="/map" />
         </ResidentTabs>
+
+        <Redirect from="/farmers" to="/farmers/dashboard" noThrow />
+        <FarmerTabs path="farmers">
+          <FarmerRecords path="/records" />
+          <FarmerCreate path="/records/add" />
+          <FarmerInformation path="/records/:farmer_id" />
+          <FarmerUpdate path="/records/:farmer_id/edit" />
+        </FarmerTabs>
 
         <Redirect from="/users" to="/users/records" noThrow />
         <UserTabs path="users">

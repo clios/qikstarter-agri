@@ -1,10 +1,12 @@
 import dayjs from 'dayjs'
 
 export default Help = {
+  // PERMISSION CHECKER
   checkPermission: (permissions = [''], permission) => {
     const result = permissions.find((element) => element === permission)
     return Boolean(result)
   },
+  // DISPLAY INFORMATION
   displayBoolean(boolean) {
     if (boolean === null) return 'NOT FOUND'
     return boolean ? 'YES' : 'NO'
@@ -41,11 +43,17 @@ export default Help = {
   displayText(text) {
     return text?.toUpperCase() || 'NOT FOUND'
   },
+  // GET FORM DATA
   formDataOrEmptyString: function (data) {
     return data || ''
   },
   formInputDate: function (date) {
+    if (!date) return null
     return date ? dayjs(date).format('YYYY-MM-DD') : ''
+  },
+  formInputDateTime: function (date) {
+    if (!date) return null
+    return date ? dayjs(date).format() : ''
   },
   formInputNumber: function (number) {
     if (number === '') return null
@@ -53,12 +61,29 @@ export default Help = {
   },
   formInputText: function (text) {
     if (text === '') return null
-    return text
+    return text?.toUpperCase()
   },
   formSelect: function (factual) {
     if (factual === 'yes') return true
     else if (factual === 'no') return false
     else if (factual === '') return null
     else return factual
+  },
+  // FORM DATA SETTER
+  setDate: function (date) {
+    if (!date) return ''
+    return dayjs(date).format('YYYY-MM-DD')
+  },
+  setNumber: function (number) {
+    if (!number) return ''
+    return number
+  },
+  setSelect: function (select) {
+    if (!select) return ''
+    return select
+  },
+  setText: function (text) {
+    if (!text) return ''
+    return text
   }
 }

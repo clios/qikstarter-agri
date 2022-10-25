@@ -48,7 +48,7 @@ function UserInformation() {
       setStatus('success')
       setName(User.data.name.toUpperCase())
       setEmail(User.data.email)
-      setDeactivated(User.data.deactivated ? 'YES' : 'NO')
+      setDeactivated(User.data.deactivated)
       setOffice(User.data.office?.toUpperCase() || 'NOT FOUND')
       setPosition(User.data.position?.toUpperCase() || 'NOT FOUND')
       setPermissions(User.data.permissions)
@@ -210,7 +210,7 @@ function UserInformation() {
             </SectionHeader>
             <SectionBody>
               <Field label="Active Account" status={status}>
-                <Toggle available={deactivated ? true : false} />
+                <Toggle available={!deactivated ? true : false} />
               </Field>
             </SectionBody>
             <SectionBody>

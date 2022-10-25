@@ -1,7 +1,6 @@
 import './Sider.css'
 
-import { CropGrowth24, Hotel24, Identification24, Industry24, TrafficIncident24 } from '@carbon/icons-react'
-import { HealthCross24, PedestrianFamily24, Power24, TrafficFlow24, UserAvatar24 } from '@carbon/icons-react'
+import { Events24, Identification24, Power24, UserAvatar24 } from '@carbon/icons-react'
 
 import AccountContext from '../contexts/AccountContext'
 import FadeAnimation from '../components/FadeAnimation'
@@ -68,7 +67,10 @@ function Sider({ children }) {
               <PanelLink to="/your-account" tooltip="Your Account">
                 <UserAvatar24 />
               </PanelLink>
-              <PanelLink to="/settlement-area" tooltip="Settlement Area">
+              <PanelLink permission="read_farmer" permissions={Account.data.permissions} to="/farmers" tooltip="Farmers">
+                <Events24 />
+              </PanelLink>
+              {/* <PanelLink to="/settlement-area" tooltip="Settlement Area">
                 <Hotel24 />
               </PanelLink>
               <PanelLink to="/population" tooltip="Population">
@@ -85,7 +87,7 @@ function Sider({ children }) {
               </PanelLink>
               <PanelLink to="/evacuation" tooltip="Evacuation">
                 <HealthCross24 />
-              </PanelLink>
+              </PanelLink> */}
               <PanelLink permission="read_user" permissions={Account.data.permissions} to="/users" tooltip="User Accounts">
                 <Identification24 />
               </PanelLink>

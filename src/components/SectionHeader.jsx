@@ -12,8 +12,8 @@ function SectionHeader(props) {
           {props.subtitle && <label className="section-header-subtitle">{props.subtitle}</label>}
           {props.error && <label className="section-header-error text-red">{props.error}</label>}
         </p>
-
         <div className="section-header-tools">{props.children}</div>
+        {props.description && <label className="text-yellow">{props.description}</label>}
       </div>
     </div>
   )
