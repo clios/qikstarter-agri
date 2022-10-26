@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import urlcat from 'urlcat'
 import useSWR from 'swr'
 
 const fetcher = (url) =>
@@ -9,13 +10,20 @@ const fetcher = (url) =>
         Authorization: `Bearer ${localStorage.getItem('q-agri-web-token')}`
       }
     })
-    .then((res) => res.data)
+    .then((res) => {
+      return {
+        records: res.data,
+        total_count: Number(res.headers['x-total-count'])
+      }
+    })
     .catch((error) => {
       throw error
     })
 
-export default function getFarmerById(farmer_id, swr_options) {
-  const url = process.env.BASE_URL + `/farmers/${farmer_id}`
+export default function getFarms(parameters) {
+  const API_URL = process.env.BASE_URL
+  const PATH = '/farms'
+  const url = urlcat(API_URL, PATH, parameters)
 
   const { data, error, mutate } = useSWR(url, fetcher, {
     onErrorRetry: (error) => {
@@ -28,7 +36,7 @@ export default function getFarmerById(farmer_id, swr_options) {
     onLoadingSlow: () => {
       toast.warning('Slow internet connection')
     },
-    ...swr_options
+    refreshInterval: 60000
   })
 
   return {

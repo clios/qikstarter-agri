@@ -11,7 +11,12 @@ function FormRow(props) {
       </div>
     )
 
-  return <div className="form-row">{props.children}</div>
+  return (
+    <div className="form-row">
+      {props.title && <p className="form-row-title">{props.title}</p>}
+      <div className="form-row-content">{props.children}</div>
+    </div>
+  )
 }
 
 export default FormRow

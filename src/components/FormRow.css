@@ -1,9 +1,19 @@
 .form-row {
+  background-color: hsla(0, 0%, 100%, 0.1);
+}
+
+.form-row-title {
+  margin: 0 3rem;
+  color: #20a8df;
+  padding-top: 1rem;
+  border-bottom: 1px solid #73858c;
+}
+
+.form-row-content {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   padding: 0.5rem 3rem 1rem 3rem;
-  background-color: hsla(0, 0%, 100%, 0.1);
 }
 
 .form-row-loading {

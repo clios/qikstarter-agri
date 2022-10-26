@@ -141,7 +141,11 @@ function FarmerUpdate() {
         <FadeAnimation>
           <Form status={status}>
             <SectionHeader bigTitle="Existing Farmer Record Form">
-              <ButtonIcon color="red" onClick={() => navigate('/farmers/records', { replace: true })} status={status} title="Close">
+              <ButtonIcon
+                color="red"
+                onClick={() => navigate(`/farmers/records/${ROUTE.farmer_id}`, { replace: true })}
+                status={status}
+                title="Close">
                 <Close20 />
               </ButtonIcon>
             </SectionHeader>

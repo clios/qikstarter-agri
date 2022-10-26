@@ -14,8 +14,8 @@ const fetcher = (url) =>
       throw error
     })
 
-export default function getFarmerById(farmer_id, swr_options) {
-  const url = process.env.BASE_URL + `/farmers/${farmer_id}`
+export default function getFarmById(farm_id, swr_options) {
+  const url = process.env.BASE_URL + `/farms/${farm_id}`
 
   const { data, error, mutate } = useSWR(url, fetcher, {
     onErrorRetry: (error) => {

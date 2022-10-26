@@ -14,3 +14,7 @@
 .section-body .field {
   width: 280px;
 }
+
+.subsection .section-body .field {
+  width: 190px;
+}

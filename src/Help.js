@@ -70,6 +70,10 @@ export default Help = {
     else return factual
   },
   // FORM DATA SETTER
+  setBoolean: function (boolean) {
+    if (boolean) return true
+    return false
+  },
   setDate: function (date) {
     if (!date) return ''
     return dayjs(date).format('YYYY-MM-DD')
