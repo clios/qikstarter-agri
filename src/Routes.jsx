@@ -12,6 +12,7 @@ import FarmCreate from './pages/FarmCreate'
 import FarmUpdate from './pages/FarmUpdate'
 import FarmerCreate from './pages/FarmerCreate'
 import FarmerInformation from './pages/FarmerInformation'
+import FarmerMap from './pages/FarmerMap'
 import FarmerRecords from './pages/FarmerRecords'
 import FarmerTabs from './layouts/FarmerTabs'
 import FarmerUpdate from './pages/FarmerUpdate'
@@ -117,6 +118,7 @@ function Routes() {
           <FarmerUpdate path="/records/:farmer_id/edit" />
           <FarmCreate path="/records/:farmer_id/farms/add" />
           <FarmUpdate path="/records/:farmer_id/farms/:farm_id/edit" />
+          <FarmerMap path="/map" />
         </FarmerTabs>
 
         <Redirect from="/users" to="/users/records" noThrow />

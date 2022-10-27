@@ -15,7 +15,8 @@
         '.svg': 'file',
         '.png': 'file',
         '.woff': 'file',
-        '.woff2': 'file'
+        '.woff2': 'file',
+        '.geojson': 'file'
       },
       minify: false,
       outfile: 'dev/index.js',
