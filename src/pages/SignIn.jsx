@@ -49,7 +49,7 @@ function SignIn() {
         if (response.status === 201) {
           localStorage.setItem('q-agri-web-token', response.headers['x-token'])
           toast.success('Welcome ' + response?.data?.name)
-          navigate('/settlement-area/landslide', { replace: true })
+          navigate('/farmers/dashboard', { replace: true })
         }
       })
       .catch((error) => {
@@ -67,7 +67,7 @@ function SignIn() {
   return (
     <FadeAnimation>
       <div className="sign-in-container">
-        {Account.data && <Redirect to="/settlement-area/landslide" noThrow replace />}
+        {Account.data && <Redirect to="/farmers/dashboard" noThrow replace />}
         <div className="sign-in-content">
           <img className="sign-in-image" src={require('../assets/sign_in_bg.svg')} alt="poster" />
           <form className="sign-in-form" onSubmit={submitForm}>
