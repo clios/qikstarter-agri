@@ -1,6 +1,5 @@
-import 'leaflet-easyprint'
-
 import { Add20, Close20, Download20, Edit16, Edit20, TrashCan16, TrashCan20, View16 } from '@carbon/icons-react'
+import { DPI, Format, MapboxExportControl, PageOrientation, Size } from '@watergis/mapbox-gl-export'
 import { navigate, useParams } from '@reach/router'
 
 import AccountContext from '../contexts/AccountContext'
@@ -10,7 +9,7 @@ import { CSVLink } from 'react-csv'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
 import Help from '../Help'
-import L from 'leaflet'
+import { MapboxStyleSwitcherControl } from 'mapbox-gl-style-switcher'
 import PageContent from '../components/PageContent'
 import PaperView from '../components/PaperView'
 import React from 'react'
@@ -24,22 +23,15 @@ import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
 import getFarmerById from '../api/getFarmerById'
 import getFarms from '../api/getFarms'
+import mapboxgl from 'mapbox-gl'
 import { toast } from 'react-toastify'
+
+mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
+mapboxgl.prewarm()
 
 // MAP TILE LAYER URL TEMPLATE
 const DEFAULT_ZOOM_LEVEL = 10
 const DEFAULT_VIEW_LOCATION = [16.523711, 121.516725]
-const MAP_TILE_LAYER_URL = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'
-const MAP_TILE_LAYER_OPTIONS = {
-  attribution:
-    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
-    'contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  maxZoom: 20,
-  id: 'mapbox/satellite-streets-v11',
-  tileSize: 512,
-  zoomOffset: -1,
-  accessToken: process.env.MAPBOX_ACCESS_TOKEN
-}
 
 function FarmerInformation() {
   // SEND GET FARMER AND FARM REQUEST
@@ -71,8 +63,8 @@ function FarmerInformation() {
   const [address_purok, setAddressPurok] = React.useState('')
   const [address_street, setAddressStreet] = React.useState('')
   // 3. RESIDENTIAL LOCATION
-  const address_latitude = ''
-  const address_longitude = ''
+  const [address_latitude, setAddressLatitude] = React.useState('')
+  const [address_longitude, setAddressLongitude] = React.useState('')
   // FORM FOOTER
   const [last_updated_by, setLastUpdatedBy] = React.useState('')
   const [updated_at, setUpdatedAt] = React.useState('')
@@ -80,14 +72,134 @@ function FarmerInformation() {
 
   // ON RENDER, REVALIDATE FARMER AND CREATE MAP
   React.useEffect(() => {
-    Farmer.mutate()
-    setMap(L.map('farmer-map', { scrollWheelZoom: false }).setView(DEFAULT_VIEW_LOCATION, DEFAULT_ZOOM_LEVEL))
+    setMap(
+      new mapboxgl.Map({
+        center: [121.516725, 16.523711],
+        container: 'farmer-map',
+        cooperativeGestures: true,
+        style: 'mapbox://styles/mapbox/dark-v10',
+        zoom: 16
+      })
+    )
   }, [])
 
-  // ON MAP CREATION, SET MAP TILE LAYER
   React.useEffect(() => {
-    map && L.tileLayer(MAP_TILE_LAYER_URL, MAP_TILE_LAYER_OPTIONS).addTo(map)
+    if (map) {
+      map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }))
+      map.addControl(new mapboxgl.FullscreenControl())
+      map.addControl(new MapboxStyleSwitcherControl())
+      map.addControl(
+        new MapboxExportControl({
+          PageSize: Size.A4,
+          PageOrientation: PageOrientation.Portrait,
+          Format: Format.PNG,
+          DPI: DPI[96],
+          Crosshair: true,
+          PrintableArea: true,
+          accessToken: process.env.MAPBOX_ACCESS_TOKEN
+        }),
+        'top-right'
+      )
+
+      map.on('idle', () => {
+        map.resize()
+      })
+    }
   }, [map])
+
+  React.useEffect(() => {
+    // PULSING DOT
+    const size = 150
+    const pulsingDot = {
+      width: size,
+      height: size,
+      data: new Uint8Array(size * size * 4),
+
+      // When the layer is added to the map,
+      // get the rendering context for the map canvas.
+      onAdd: function () {
+        const canvas = document.createElement('canvas')
+        canvas.width = this.width
+        canvas.height = this.height
+        this.context = canvas.getContext('2d')
+      },
+
+      // Call once before every frame where the icon will be used.
+      render: function () {
+        const duration = 1000
+        const t = (performance.now() % duration) / duration
+
+        const radius = (size / 2) * 0.3
+        const outerRadius = (size / 2) * 0.7 * t + radius
+        const context = this.context
+
+        // Draw the outer circle.
+        context.clearRect(0, 0, this.width, this.height)
+        context.beginPath()
+        context.arc(this.width / 2, this.height / 2, outerRadius, 0, Math.PI * 2)
+        context.fillStyle = `rgba(255, 200, 200, ${1 - t})`
+        context.fill()
+
+        // Draw the inner circle.
+        context.beginPath()
+        context.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2)
+        context.fillStyle = 'rgba(255, 100, 100, 1)'
+        context.strokeStyle = 'white'
+        context.lineWidth = 2 + 4 * (1 - t)
+        context.fill()
+        context.stroke()
+
+        // Update this image's data with data from the canvas.
+        this.data = context.getImageData(0, 0, this.width, this.height).data
+
+        // Continuously repaint the map, resulting
+        // in the smooth animation of the dot.
+        map.triggerRepaint()
+
+        // Return `true` to let the map know that the image was updated.
+        return true
+      }
+    }
+
+    if (map && Farmer.data) {
+      console.log('COORDINATES: ' + Farmer.data.address_latitude + ', ' + Farmer.data.address_longitude)
+      map.flyTo({ center: [Farmer.data.address_longitude, Farmer.data.address_latitude] })
+
+      map.on('styledata', () => {
+        !map.hasImage('pulsing-dot') && map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 })
+
+        !map.getSource('dot-point') &&
+          map.addSource('dot-point', {
+            'type': 'geojson',
+            'data': {
+              'type': 'FeatureCollection',
+              'features': [
+                {
+                  'type': 'Feature',
+                  'geometry': {
+                    'type': 'Point',
+                    'coordinates': [Farmer.data.address_longitude, Farmer.data.address_latitude] // icon position [lng, lat]
+                  }
+                }
+              ]
+            }
+          })
+
+        if (!map.getLayer('layer-with-pulsing-dot')) {
+          map.addLayer({
+            'id': 'layer-with-pulsing-dot',
+            'type': 'symbol',
+            'source': 'dot-point',
+            'layout': {
+              'icon-image': 'pulsing-dot'
+            }
+          })
+        }
+      })
+
+      map.on('load', () => {})
+    }
+  }, [map, Farmer.data])
 
   // ON FETCH FARMER
   React.useEffect(() => {
@@ -111,6 +223,8 @@ function FarmerInformation() {
       setAddressBarangay(Help.displayText(f.address_barangay))
       setAddressPurok(Help.displayText(f.address_purok))
       setAddressStreet(Help.displayText(f.address_street))
+      setAddressLatitude(Help.displayNumber(f.address_latitude))
+      setAddressLongitude(Help.displayNumber(f.address_longitude))
       setLastUpdatedBy(Help.displayText(f.last_updated_by))
       setUpdatedAt(Help.displayDateTime(f.updated_at))
     }
@@ -267,8 +381,8 @@ function FarmerInformation() {
             </SectionBody>
             <SectionHeader title="3. Residential Location" />
             <SectionBody>
-              <Field label="Latitude" status={status} text={name} />
-              <Field label="Longitude" status={status} text={name} />
+              <Field label="Latitude" status={status} text={address_latitude} />
+              <Field label="Longitude" status={status} text={address_longitude} />
             </SectionBody>
             <SectionBody>
               <div id="farmer-map" className="map-container-farmer" />

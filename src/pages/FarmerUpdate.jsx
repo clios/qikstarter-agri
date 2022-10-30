@@ -101,6 +101,8 @@ function FarmerUpdate() {
       address_province: 'QUIRINO',
       address_purok: Help.formInputText(address_purok),
       address_street: Help.formInputText(address_street),
+      address_latitude: Help.formInputNumber(address_latitude),
+      address_longitude: Help.formInputNumber(address_longitude),
       birthday: Help.formInputDateTime(birthday),
       employment: Help.formSelect(employment),
       marital_status: Help.formSelect(marital_status),
