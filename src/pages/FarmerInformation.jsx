@@ -197,7 +197,26 @@ function FarmerInformation() {
         }
       })
 
-      map.on('load', () => {})
+      map.on('load', () => {
+        map.addSource('mapbox-dem', {
+          'type': 'raster-dem',
+          'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+          'tileSize': 512,
+          'maxzoom': 14
+        })
+
+        // add the DEM source as a terrain layer with exaggerated height
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 })
+
+        // add sky styling with `setFog` that will show when the map is highly pitched
+        map.setFog({
+          'horizon-blend': 0.3,
+          'color': '#f8f0e3',
+          'high-color': '#add8e6',
+          'space-color': '#d8f2ff',
+          'star-intensity': 0.0
+        })
+      })
     }
   }, [map, Farmer.data])
 
