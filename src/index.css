@@ -119,3 +119,18 @@ body {
 a:link {
   text-decoration: none;
 }
+
+/* FIX MAPBOX EXPORT */
+
+.mapboxgl-export-list {
+  background-color: hsl(226, 78%, 8%);
+}
+
+.mapboxgl-export-list label {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.mapboxgl-export-list button {
+  background-color: hsl(0, 0%, 99%) !important;
+}

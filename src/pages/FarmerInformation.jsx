@@ -30,10 +30,6 @@ import { toast } from 'react-toastify'
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
 mapboxgl.prewarm()
 
-// MAP TILE LAYER URL TEMPLATE
-const DEFAULT_ZOOM_LEVEL = 10
-const DEFAULT_VIEW_LOCATION = [16.523711, 121.516725]
-
 function FarmerInformation() {
   // SEND GET FARMER AND FARM REQUEST
   const ROUTE = useParams()
@@ -110,22 +106,34 @@ function FarmerInformation() {
 
   React.useEffect(() => {
     if (map && Farmer.data) {
-      map.flyTo({ center: [Farmer.data.address_longitude, Farmer.data.address_latitude] })
+      let lat = Farmer.data.address_latitude
+      let lng = Farmer.data.address_longitude
+
+      map.flyTo({ center: [lng, lat] })
 
       map.on('styledata', () => {
         !map.hasImage('pulsing-dot') && map.addImage('pulsing-dot', mapMarker(100, map), { pixelRatio: 2 })
 
-        !map.getSource('dot-point') &&
+        if (!map.getSource('dot-point')) {
           map.addSource('dot-point', {
             'type': 'geojson',
             'data': {
               'type': 'Feature',
               'geometry': {
                 'type': 'Point',
-                'coordinates': [Farmer.data.address_longitude, Farmer.data.address_latitude] // icon position [lng, lat]
+                'coordinates': [lng, lat] // icon position [lng, lat]
               }
             }
           })
+        } else {
+          map.getSource('dot-point').setData({
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [lng, lat] // icon position [lng, lat]
+            }
+          })
+        }
 
         !map.getLayer('layer-with-pulsing-dot') &&
           map.addLayer({
