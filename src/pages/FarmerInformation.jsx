@@ -84,6 +84,7 @@ function FarmerInformation() {
     )
   }, [])
 
+  // AFTER CREATING MAP, ADD CONTROLS
   React.useEffect(() => {
     if (map) {
       map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }))
@@ -108,33 +109,25 @@ function FarmerInformation() {
   }, [map])
 
   React.useEffect(() => {
-    const pulsingDot = mapMarker(100, map)
-
     if (map && Farmer.data) {
-      console.log('COORDINATES: ' + Farmer.data.address_latitude + ', ' + Farmer.data.address_longitude)
       map.flyTo({ center: [Farmer.data.address_longitude, Farmer.data.address_latitude] })
 
       map.on('styledata', () => {
-        !map.hasImage('pulsing-dot') && map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 })
+        !map.hasImage('pulsing-dot') && map.addImage('pulsing-dot', mapMarker(100, map), { pixelRatio: 2 })
 
         !map.getSource('dot-point') &&
           map.addSource('dot-point', {
             'type': 'geojson',
             'data': {
-              'type': 'FeatureCollection',
-              'features': [
-                {
-                  'type': 'Feature',
-                  'geometry': {
-                    'type': 'Point',
-                    'coordinates': [Farmer.data.address_longitude, Farmer.data.address_latitude] // icon position [lng, lat]
-                  }
-                }
-              ]
+              'type': 'Feature',
+              'geometry': {
+                'type': 'Point',
+                'coordinates': [Farmer.data.address_longitude, Farmer.data.address_latitude] // icon position [lng, lat]
+              }
             }
           })
 
-        if (!map.getLayer('layer-with-pulsing-dot')) {
+        !map.getLayer('layer-with-pulsing-dot') &&
           map.addLayer({
             'id': 'layer-with-pulsing-dot',
             'type': 'symbol',
@@ -143,14 +136,14 @@ function FarmerInformation() {
               'icon-image': 'pulsing-dot'
             }
           })
-        }
 
-        map.addSource('mapbox-dem', {
-          'type': 'raster-dem',
-          'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-          'tileSize': 512,
-          'maxzoom': 14
-        })
+        !map.getSource('mapbox-dem') &&
+          map.addSource('mapbox-dem', {
+            'type': 'raster-dem',
+            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            'tileSize': 512,
+            'maxzoom': 14
+          })
 
         // add the DEM source as a terrain layer with exaggerated height
         map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 })
