@@ -154,7 +154,7 @@ function FarmerInformation() {
           })
 
         // add the DEM source as a terrain layer with exaggerated height
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 })
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2 })
 
         // add sky styling with `setFog` that will show when the map is highly pitched
         map.setFog({
