@@ -33,7 +33,6 @@ import landslide_high from '../geojson/landslide_high.geojson'
 import landslide_low from '../geojson/landslide_low.geojson'
 import landslide_moderate from '../geojson/landslide_moderate.geojson'
 import landslide_very_high from '../geojson/landslide_very_high.geojson'
-import { m } from 'framer-motion'
 import mapMarker from '../mapMarker'
 import mapboxgl from 'mapbox-gl'
 import { toast } from 'react-toastify'
@@ -119,15 +118,15 @@ function FarmerInformation() {
     }
   }, [map])
 
-  //
+  // ON LOAD FARMER DATA
   React.useEffect(() => {
     if (map && Farmer.data) {
       let lat = Farmer.data.address_latitude
       let lng = Farmer.data.address_longitude
+      map.resize()
 
       // HAS COORDINATES
       if (lat && lng) {
-        map.resize()
         map.jumpTo({ center: [lng, lat], zoom: 17 })
 
         // ON LOAD OF STYLE DATA
@@ -245,6 +244,13 @@ function FarmerInformation() {
               'layout': { 'visibility': 'none' },
               'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
             })
+          }
+        })
+      } else {
+        map.on('load', () => {
+          if (map.getSource('farmer-coordinates-src')) {
+            map.jumpTo({ center: [121.647584, 16.323105], zoom: 8 })
+            map.getLayer('farmer-layer') && map.setLayoutProperty('farmer-layer', 'visibility', 'none')
           }
         })
       }
