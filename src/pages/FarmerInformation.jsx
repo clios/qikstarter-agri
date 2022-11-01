@@ -1,4 +1,4 @@
-import { Add20, Close20, Download20, Edit16, Edit20, TrashCan16, TrashCan20, View16 } from '@carbon/icons-react'
+import { Add20, Close20, Download20, Edit16, Edit20, SettingsView20, TrashCan16, TrashCan20, View16 } from '@carbon/icons-react'
 import { DPI, Format, MapboxExportControl, PageOrientation, Size } from '@watergis/mapbox-gl-export'
 import { navigate, useParams } from '@reach/router'
 
@@ -6,12 +6,15 @@ import AccountContext from '../contexts/AccountContext'
 import Authorization from '../components/Authorization'
 import ButtonIcon from '../components/ButtonIcon'
 import { CSVLink } from 'react-csv'
+import Checkbox from '../components/Checkbox'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
+import FormRow from '../components/FormRow'
 import Help from '../Help'
 import PageContent from '../components/PageContent'
 import PaperView from '../components/PaperView'
 import React from 'react'
+import SearchBox from '../components/SearchBox'
 import SectionBody from '../components/SectionBody'
 import SectionFooter from '../components/SectionFooter'
 import SectionHeader from '../components/SectionHeader'
@@ -20,9 +23,17 @@ import SubSectionHeader from '../components/SubSectionHeader'
 import Toggle from '../fragments/FarmerInformation/Toggle'
 import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
+import flood_high from '../geojson/flood_high.geojson'
+import flood_low from '../geojson/flood_low.geojson'
+import flood_moderate from '../geojson/flood_moderate.geojson'
+import flood_very_high from '../geojson/flood_very_high.geojson'
 import getFarmerById from '../api/getFarmerById'
 import getFarms from '../api/getFarms'
+import landslide_high from '../geojson/landslide_high.geojson'
 import landslide_low from '../geojson/landslide_low.geojson'
+import landslide_moderate from '../geojson/landslide_moderate.geojson'
+import landslide_very_high from '../geojson/landslide_very_high.geojson'
+import { m } from 'framer-motion'
 import mapMarker from '../mapMarker'
 import mapboxgl from 'mapbox-gl'
 import { toast } from 'react-toastify'
@@ -40,6 +51,15 @@ function FarmerInformation() {
   const Account = React.useContext(AccountContext)
   const [status, setStatus] = React.useState('loading')
   const [map, setMap] = React.useState(null)
+  const [display, setDisplay] = React.useState(false)
+  const [landslide_very_high_filter, setLandslideVeryHighFilter] = React.useState(false)
+  const [landslide_high_filter, setLandslideHighFilter] = React.useState(false)
+  const [landslide_moderate_filter, setLandslideModerateFilter] = React.useState(false)
+  const [landslide_low_filter, setLandslideLowFilter] = React.useState(false)
+  const [flood_very_high_filter, setFloodVeryHighFilter] = React.useState(false)
+  const [flood_high_filter, setFloodHighFilter] = React.useState(false)
+  const [flood_moderate_filter, setFloodModerateFilter] = React.useState(false)
+  const [flood_low_filter, setFloodLowFilter] = React.useState(false)
 
   // NEW FARMER RECORD FORM -----------------------------------------------|
   const [recorded_at, setRecordedAt] = React.useState('')
@@ -71,11 +91,11 @@ function FarmerInformation() {
   React.useEffect(() => {
     setMap(
       new mapboxgl.Map({
-        center: [121.516725, 16.523711],
+        center: [121.647584, 16.323105],
         container: 'farmer-map',
         cooperativeGestures: true,
         style: 'mapbox://styles/mapbox/satellite-streets-v11',
-        zoom: 16
+        zoom: 8
       })
     )
   }, [])
@@ -108,7 +128,7 @@ function FarmerInformation() {
       // HAS COORDINATES
       if (lat && lng) {
         map.resize()
-        map.flyTo({ center: [lng, lat] })
+        map.jumpTo({ center: [lng, lat], zoom: 17 })
 
         // ON LOAD OF STYLE DATA
         map.on('load', () => {
@@ -131,29 +151,144 @@ function FarmerInformation() {
             map.getSource('farmer-coordinates-src').setData({ 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } })
           }
 
-          // LANDSLIDE LOW SUSCEPTIBILITY
-          if (!map.getSource('landslide_low')) {
-            map.addSource('landslide_low', { 'type': 'geojson', 'data': landslide_low })
+          // LANDSLIDE VERY HIGH SUSCEPTIBILITY
+          if (!map.getSource('landslide_very_high_src')) {
+            map.addSource('landslide_very_high_src', { 'type': 'geojson', 'data': landslide_very_high })
             map.addLayer({
-              'id': 'landslide_low',
+              'id': 'landslide_very_high_layer',
+              'source': 'landslide_very_high_src',
               'type': 'fill',
-              'source': 'landslide_low',
-              'layout': {},
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#DF2020', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // LANDSLIDE HIGH SUSCEPTIBILITY
+          if (!map.getSource('landslide_high_src')) {
+            map.addSource('landslide_high_src', { 'type': 'geojson', 'data': landslide_high })
+            map.addLayer({
+              'id': 'landslide_high_layer',
+              'source': 'landslide_high_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#DF9C20', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // LANDSLIDE MODERATE SUSCEPTIBILITY
+          if (!map.getSource('landslide_moderate_src')) {
+            map.addSource('landslide_moderate_src', { 'type': 'geojson', 'data': landslide_moderate })
+            map.addLayer({
+              'id': 'landslide_moderate_layer',
+              'source': 'landslide_moderate_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#DFDF20', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // LANDSLIDE LOW SUSCEPTIBILITY
+          if (!map.getSource('landslide_low_src')) {
+            map.addSource('landslide_low_src', { 'type': 'geojson', 'data': landslide_low })
+            map.addLayer({
+              'id': 'landslide_low_layer',
+              'source': 'landslide_low_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // FLOOD VERY HIGH SUSCEPTIBILITY
+          if (!map.getSource('flood_very_high_src')) {
+            map.addSource('flood_very_high_src', { 'type': 'geojson', 'data': flood_very_high })
+            map.addLayer({
+              'id': 'flood_very_high_layer',
+              'source': 'flood_very_high_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#DF2020', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // FLOOD HIGH SUSCEPTIBILITY
+          if (!map.getSource('flood_high_src')) {
+            map.addSource('flood_high_src', { 'type': 'geojson', 'data': flood_high })
+            map.addLayer({
+              'id': 'flood_high_layer',
+              'source': 'flood_high_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#DF9C20', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // FLOOD MODERATE SUSCEPTIBILITY
+          if (!map.getSource('flood_moderate_src')) {
+            map.addSource('flood_moderate_src', { 'type': 'geojson', 'data': flood_moderate })
+            map.addLayer({
+              'id': 'flood_moderate_layer',
+              'source': 'flood_moderate_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
+              'paint': { 'fill-color': '#DFDF20', 'fill-opacity': 0.5 }
+            })
+          }
+
+          // FLOOD LOW SUSCEPTIBILITY
+          if (!map.getSource('flood_low_src')) {
+            map.addSource('flood_low_src', { 'type': 'geojson', 'data': flood_low })
+            map.addLayer({
+              'id': 'flood_low_layer',
+              'source': 'flood_low_src',
+              'type': 'fill',
+              'layout': { 'visibility': 'none' },
               'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
             })
           }
         })
       }
-
-      // NO COORDINATES
-      if (!lat && !lng) {
-        new mapboxgl.Popup({ closeOnClick: false })
-          .setLngLat([121.516725, 16.523711])
-          .setHTML('<p class="text-black">NO LOCATION FOUND</p>')
-          .addTo(map)
-      }
     }
   }, [map, Farmer.data])
+
+  React.useEffect(() => {
+    if (map) {
+      if (map.getLayer('landslide_very_high_layer')) {
+        map.setLayoutProperty('landslide_very_high_layer', 'visibility', landslide_very_high_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('landslide_high_layer')) {
+        map.setLayoutProperty('landslide_high_layer', 'visibility', landslide_high_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('landslide_moderate_layer')) {
+        map.setLayoutProperty('landslide_moderate_layer', 'visibility', landslide_moderate_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('landslide_low_layer')) {
+        map.setLayoutProperty('landslide_low_layer', 'visibility', landslide_low_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('flood_very_high_layer')) {
+        map.setLayoutProperty('flood_very_high_layer', 'visibility', flood_very_high_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('flood_high_layer')) {
+        map.setLayoutProperty('flood_high_layer', 'visibility', flood_high_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('flood_moderate_layer')) {
+        map.setLayoutProperty('flood_moderate_layer', 'visibility', flood_moderate_filter ? 'visible' : 'none')
+      }
+      if (map.getLayer('flood_low_layer')) {
+        map.setLayoutProperty('flood_low_layer', 'visibility', flood_low_filter ? 'visible' : 'none')
+      }
+    }
+  }, [
+    map,
+    landslide_low_filter,
+    landslide_moderate_filter,
+    landslide_very_high_filter,
+    landslide_high_filter,
+    flood_low_filter,
+    flood_moderate_filter,
+    flood_very_high_filter,
+    flood_high_filter
+  ])
 
   // ON FETCH FARMER
   React.useEffect(() => {
@@ -333,7 +468,57 @@ function FarmerInformation() {
               <Field label="Purok" status={status} text={address_purok} />
               <Field label="Street" status={status} text={address_street} />
             </SectionBody>
-            <SectionHeader title="3. Residential Location" />
+            <SectionHeader title="3. Residential Location">
+              <ButtonIcon onClick={() => setDisplay(!display)} title="Toggle hazard areas">
+                <SettingsView20 />
+              </ButtonIcon>
+            </SectionHeader>
+            <SearchBox className={display ? 'display' : 'hidden'}>
+              <FormRow>
+                <Field label="Landslide Prone" status={status}>
+                  <Checkbox
+                    checked={landslide_very_high_filter}
+                    onChange={(e) => setLandslideVeryHighFilter(e.target.checked)}
+                    text="Very High Susceptibility"
+                  />
+                </Field>
+                <Field label="Landslide Prone" status={status}>
+                  <Checkbox checked={landslide_high_filter} onChange={(e) => setLandslideHighFilter(e.target.checked)} text="High Susceptibility" />
+                </Field>
+                <Field label="Landslide Prone" status={status}>
+                  <Checkbox
+                    checked={landslide_moderate_filter}
+                    onChange={(e) => setLandslideModerateFilter(e.target.checked)}
+                    text="Moderate Susceptibility"
+                  />
+                </Field>
+                <Field label="Landslide Prone" status={status}>
+                  <Checkbox checked={landslide_low_filter} onChange={(e) => setLandslideLowFilter(e.target.checked)} text="Low Susceptibility" />
+                </Field>
+              </FormRow>
+              <FormRow>
+                <Field label="Flood Prone" status={status}>
+                  <Checkbox
+                    checked={flood_very_high_filter}
+                    onChange={(e) => setFloodVeryHighFilter(e.target.checked)}
+                    text="Very High Susceptibility"
+                  />
+                </Field>
+                <Field label="Flood Prone" status={status}>
+                  <Checkbox checked={flood_high_filter} onChange={(e) => setFloodHighFilter(e.target.checked)} text="High Susceptibility" />
+                </Field>
+                <Field label="Flood Prone" status={status}>
+                  <Checkbox
+                    checked={flood_moderate_filter}
+                    onChange={(e) => setFloodModerateFilter(e.target.checked)}
+                    text="Moderate Susceptibility"
+                  />
+                </Field>
+                <Field label="Flood Prone" status={status}>
+                  <Checkbox checked={flood_low_filter} onChange={(e) => setFloodLowFilter(e.target.checked)} text="Low Susceptibility" />
+                </Field>
+              </FormRow>
+            </SearchBox>
             <SectionBody>
               <Field label="Latitude" status={status} text={address_latitude} />
               <Field label="Longitude" status={status} text={address_longitude} />
