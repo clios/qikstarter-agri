@@ -9,7 +9,6 @@ import { CSVLink } from 'react-csv'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
 import Help from '../Help'
-import { MapboxStyleSwitcherControl } from 'mapbox-gl-style-switcher'
 import PageContent from '../components/PageContent'
 import PaperView from '../components/PaperView'
 import React from 'react'
@@ -23,6 +22,7 @@ import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
 import getFarmerById from '../api/getFarmerById'
 import getFarms from '../api/getFarms'
+import landslide_low from '../geojson/landslide_low.geojson'
 import mapMarker from '../mapMarker'
 import mapboxgl from 'mapbox-gl'
 import { toast } from 'react-toastify'
@@ -74,7 +74,7 @@ function FarmerInformation() {
         center: [121.516725, 16.523711],
         container: 'farmer-map',
         cooperativeGestures: true,
-        style: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/mapbox/satellite-streets-v11',
         zoom: 16
       })
     )
@@ -85,7 +85,6 @@ function FarmerInformation() {
     if (map) {
       map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }))
       map.addControl(new mapboxgl.FullscreenControl())
-      map.addControl(new MapboxStyleSwitcherControl())
       map.addControl(
         new MapboxExportControl({
           PageSize: Size.A4,
@@ -97,15 +96,46 @@ function FarmerInformation() {
           accessToken: process.env.MAPBOX_ACCESS_TOKEN
         })
       )
-
-      map.on('idle', () => map.resize())
     }
   }, [map])
 
+  //
   React.useEffect(() => {
     if (map && Farmer.data) {
       let lat = Farmer.data.address_latitude
       let lng = Farmer.data.address_longitude
+
+      // HAS COORDINATES
+      if (lat && lng) {
+        map.resize()
+        map.flyTo({ center: [lng, lat] })
+        // ON LOAD OF STYLE DATA
+        map.on('load', () => {
+          console.log('RENDER SOURCES AND LAYERS...')
+          // DIGITAL ELEVATION MODEL
+          map.addSource('mapbox-dem-src', { 'type': 'raster-dem', 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1', 'tileSize': 512, 'maxzoom': 14 })
+          map.setTerrain({ 'source': 'mapbox-dem-src', 'exaggeration': 2 })
+          map.setFog({ 'horizon-blend': 0.3, 'color': '#f8f0e3', 'high-color': '#add8e6', 'space-color': '#d8f2ff', 'star-intensity': 0.0 })
+
+          // FARMER COORDINATES
+          map.addSource('farmer-coordinates-src', {
+            'type': 'geojson',
+            'data': { 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } }
+          })
+          map.addImage('farmer-mark', mapMarker(100, map), { pixelRatio: 2 })
+          map.addLayer({ 'id': 'farmer-layer', 'type': 'symbol', 'source': 'farmer-coordinates-src', 'layout': { 'icon-image': 'farmer-mark' } })
+
+          // LANDSLIDE LOW SUSCEPTIBILITY
+          map.addSource('landslide_low', { 'type': 'geojson', 'data': landslide_low })
+          map.addLayer({
+            'id': 'landslide_low',
+            'type': 'fill',
+            'source': 'landslide_low',
+            'layout': {},
+            'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
+          })
+        })
+      }
 
       // NO COORDINATES
       if (!lat && !lng) {
@@ -113,36 +143,6 @@ function FarmerInformation() {
           .setLngLat([121.516725, 16.523711])
           .setHTML('<p class="text-black">NO LOCATION FOUND</p>')
           .addTo(map)
-      }
-
-      // HAS COORDINATES
-      if (lat && lng) {
-        map.flyTo({ center: [lng, lat] })
-        // ON LOAD OF STYLE DATA
-        map.on('styledata', () => {
-          // ADD SOURCE: DIGITAL ELEVATION MODEL
-          !map.getSource('mapbox-dem-src') &&
-            map.addSource('mapbox-dem-src', { 'type': 'raster-dem', 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1', 'tileSize': 512, 'maxzoom': 14 })
-          map.setTerrain({ 'source': 'mapbox-dem-src', 'exaggeration': 2 })
-
-          // ADD SOURCE: FARMER COORDINATES
-          !map.getSource('farmer-coordinates-src')
-            ? map.addSource('farmer-coordinates-src', {
-                'type': 'geojson',
-                'data': { 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } }
-              })
-            : map.getSource('farmer-coordinates-src').setData({ 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } })
-
-          // ADD IMAGE: FARMER MARKER
-          !map.hasImage('farmer-mark') && map.addImage('farmer-mark', mapMarker(100, map), { pixelRatio: 2 })
-
-          // ADD LAYER: FARMER
-          !map.getLayer('farmer-layer') &&
-            map.addLayer({ 'id': 'farmer-layer', 'type': 'symbol', 'source': 'farmer-coordinates-src', 'layout': { 'icon-image': 'farmer-mark' } })
-
-          // ADD MAP FOG
-          map.setFog({ 'horizon-blend': 0.3, 'color': '#f8f0e3', 'high-color': '#add8e6', 'space-color': '#d8f2ff', 'star-intensity': 0.0 })
-        })
       }
     }
   }, [map, Farmer.data])
