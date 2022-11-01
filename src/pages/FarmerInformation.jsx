@@ -98,9 +98,7 @@ function FarmerInformation() {
         })
       )
 
-      map.on('idle', () => {
-        map.resize()
-      })
+      map.on('idle', () => map.resize())
     }
   }, [map])
 
@@ -109,62 +107,43 @@ function FarmerInformation() {
       let lat = Farmer.data.address_latitude
       let lng = Farmer.data.address_longitude
 
-      map.flyTo({ center: [lng, lat] })
+      // NO COORDINATES
+      if (!lat && !lng) {
+        new mapboxgl.Popup({ closeOnClick: false })
+          .setLngLat([121.516725, 16.523711])
+          .setHTML('<p class="text-black">NO LOCATION FOUND</p>')
+          .addTo(map)
+      }
 
-      map.on('styledata', () => {
-        !map.hasImage('pulsing-dot') && map.addImage('pulsing-dot', mapMarker(100, map), { pixelRatio: 2 })
+      // HAS COORDINATES
+      if (lat && lng) {
+        map.flyTo({ center: [lng, lat] })
+        // ON LOAD OF STYLE DATA
+        map.on('styledata', () => {
+          // ADD SOURCE: DIGITAL ELEVATION MODEL
+          !map.getSource('mapbox-dem-src') &&
+            map.addSource('mapbox-dem-src', { 'type': 'raster-dem', 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1', 'tileSize': 512, 'maxzoom': 14 })
+          map.setTerrain({ 'source': 'mapbox-dem-src', 'exaggeration': 2 })
 
-        if (!map.getSource('dot-point')) {
-          map.addSource('dot-point', {
-            'type': 'geojson',
-            'data': {
-              'type': 'Feature',
-              'geometry': {
-                'type': 'Point',
-                'coordinates': [lng, lat] // icon position [lng, lat]
-              }
-            }
-          })
-        } else {
-          map.getSource('dot-point').setData({
-            'type': 'Feature',
-            'geometry': {
-              'type': 'Point',
-              'coordinates': [lng, lat] // icon position [lng, lat]
-            }
-          })
-        }
+          // ADD SOURCE: FARMER COORDINATES
+          !map.getSource('farmer-coordinates-src')
+            ? map.addSource('farmer-coordinates-src', {
+                'type': 'geojson',
+                'data': { 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } }
+              })
+            : map.getSource('farmer-coordinates-src').setData({ 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } })
 
-        !map.getLayer('layer-with-pulsing-dot') &&
-          map.addLayer({
-            'id': 'layer-with-pulsing-dot',
-            'type': 'symbol',
-            'source': 'dot-point',
-            'layout': {
-              'icon-image': 'pulsing-dot'
-            }
-          })
+          // ADD IMAGE: FARMER MARKER
+          !map.hasImage('farmer-mark') && map.addImage('farmer-mark', mapMarker(100, map), { pixelRatio: 2 })
 
-        !map.getSource('mapbox-dem') &&
-          map.addSource('mapbox-dem', {
-            'type': 'raster-dem',
-            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-            'tileSize': 512,
-            'maxzoom': 14
-          })
+          // ADD LAYER: FARMER
+          !map.getLayer('farmer-layer') &&
+            map.addLayer({ 'id': 'farmer-layer', 'type': 'symbol', 'source': 'farmer-coordinates-src', 'layout': { 'icon-image': 'farmer-mark' } })
 
-        // add the DEM source as a terrain layer with exaggerated height
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2 })
-
-        // add sky styling with `setFog` that will show when the map is highly pitched
-        map.setFog({
-          'horizon-blend': 0.3,
-          'color': '#f8f0e3',
-          'high-color': '#add8e6',
-          'space-color': '#d8f2ff',
-          'star-intensity': 0.0
+          // ADD MAP FOG
+          map.setFog({ 'horizon-blend': 0.3, 'color': '#f8f0e3', 'high-color': '#add8e6', 'space-color': '#d8f2ff', 'star-intensity': 0.0 })
         })
-      })
+      }
     }
   }, [map, Farmer.data])
 
