@@ -109,31 +109,39 @@ function FarmerInformation() {
       if (lat && lng) {
         map.resize()
         map.flyTo({ center: [lng, lat] })
+
         // ON LOAD OF STYLE DATA
         map.on('load', () => {
-          console.log('RENDER SOURCES AND LAYERS...')
           // DIGITAL ELEVATION MODEL
-          map.addSource('mapbox-dem-src', { 'type': 'raster-dem', 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1', 'tileSize': 512, 'maxzoom': 14 })
-          map.setTerrain({ 'source': 'mapbox-dem-src', 'exaggeration': 2 })
-          map.setFog({ 'horizon-blend': 0.3, 'color': '#f8f0e3', 'high-color': '#add8e6', 'space-color': '#d8f2ff', 'star-intensity': 0.0 })
+          if (!map.getSource('mapbox-dem-src')) {
+            map.addSource('mapbox-dem-src', { 'type': 'raster-dem', 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1', 'tileSize': 512, 'maxzoom': 14 })
+            map.setTerrain({ 'source': 'mapbox-dem-src', 'exaggeration': 2 })
+            map.setFog({ 'horizon-blend': 0.3, 'color': '#f8f0e3', 'high-color': '#add8e6', 'space-color': '#d8f2ff', 'star-intensity': 0.0 })
+          }
 
           // FARMER COORDINATES
-          map.addSource('farmer-coordinates-src', {
-            'type': 'geojson',
-            'data': { 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } }
-          })
-          map.addImage('farmer-mark', mapMarker(100, map), { pixelRatio: 2 })
-          map.addLayer({ 'id': 'farmer-layer', 'type': 'symbol', 'source': 'farmer-coordinates-src', 'layout': { 'icon-image': 'farmer-mark' } })
+          if (!map.getSource('farmer-coordinates-src')) {
+            map.addSource('farmer-coordinates-src', {
+              'type': 'geojson',
+              'data': { 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } }
+            })
+            map.addImage('farmer-mark', mapMarker(100, map), { pixelRatio: 2 })
+            map.addLayer({ 'id': 'farmer-layer', 'type': 'symbol', 'source': 'farmer-coordinates-src', 'layout': { 'icon-image': 'farmer-mark' } })
+          } else {
+            map.getSource('farmer-coordinates-src').setData({ 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } })
+          }
 
           // LANDSLIDE LOW SUSCEPTIBILITY
-          map.addSource('landslide_low', { 'type': 'geojson', 'data': landslide_low })
-          map.addLayer({
-            'id': 'landslide_low',
-            'type': 'fill',
-            'source': 'landslide_low',
-            'layout': {},
-            'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
-          })
+          if (!map.getSource('landslide_low')) {
+            map.addSource('landslide_low', { 'type': 'geojson', 'data': landslide_low })
+            map.addLayer({
+              'id': 'landslide_low',
+              'type': 'fill',
+              'source': 'landslide_low',
+              'layout': {},
+              'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
+            })
+          }
         })
       }
 
