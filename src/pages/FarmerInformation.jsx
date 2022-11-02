@@ -44,7 +44,7 @@ function FarmerInformation() {
   // SEND GET FARMER AND FARM REQUEST
   const ROUTE = useParams()
   const Farmer = getFarmerById(ROUTE.farmer_id)
-  const Farms = getFarms({ resident_id: ROUTE.farmer_id })
+  const Farms = getFarms({ farmer_id: ROUTE.farmer_id })
 
   // INFORMATION STATE
   const Account = React.useContext(AccountContext)
