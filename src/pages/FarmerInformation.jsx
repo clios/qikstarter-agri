@@ -144,7 +144,7 @@ function FarmerInformation() {
               'type': 'geojson',
               'data': { 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } }
             })
-            map.addImage('farmer-mark', mapMarker(100, map), { pixelRatio: 2 })
+            map.addImage('farmer-mark', mapMarker(100, '#20A8DF', map), { pixelRatio: 2 })
             map.addLayer({ 'id': 'farmer-layer', 'type': 'symbol', 'source': 'farmer-coordinates-src', 'layout': { 'icon-image': 'farmer-mark' } })
           } else {
             map.getSource('farmer-coordinates-src').setData({ 'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [lng, lat] } })
