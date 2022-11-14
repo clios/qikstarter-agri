@@ -1,6 +1,4 @@
 export default function mapMarker(size, map) {
-  // PULSING DOT
-  // const size = 150
   const pulsingDot = {
     width: size,
     height: size,
@@ -28,7 +26,7 @@ export default function mapMarker(size, map) {
       context.clearRect(0, 0, this.width, this.height)
       context.beginPath()
       context.arc(this.width / 2, this.height / 2, outerRadius, 0, Math.PI * 2)
-      context.fillStyle = `rgba(32, 168, 223, ${1 - t})`
+      context.fillStyle = `rgba(255, 255, 255, ${1 - t})`
       context.fill()
 
       // Draw the inner circle.
