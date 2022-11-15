@@ -285,6 +285,13 @@ function FarmerMap() {
               </Field>
             </FormRow>
             <FormRow>
+              <Field label="Year" status={status}>
+                <Select onChange={(e) => setCensus(e.target.value)} value={census}>
+                  <option value={2022}>2022</option>
+                  <option value={2023}>2023</option>
+                  ))
+                </Select>
+              </Field>
               {/* {Account.vicinity_municipality === '' && ( */}
               <Field label="Municipality" status={status}>
                 <Select
