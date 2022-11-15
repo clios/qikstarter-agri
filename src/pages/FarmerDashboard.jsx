@@ -78,7 +78,7 @@ function FarmerDashboard() {
           <TableToolbar
             mainChild={
               <p>
-                AS OF YEAR {census} - QUIRINO {address_municipality && ', ' + address_municipality}
+                AS OF YEAR {census} - QUIRINO{address_municipality && ', ' + address_municipality}
                 {address_barangay && ', ' + address_barangay}
               </p>
             }>
