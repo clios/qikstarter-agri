@@ -16,6 +16,7 @@ import React from 'react'
 import SearchBox from '../components/SearchBox'
 import Select from '../components/Select'
 import TableToolbar from '../components/TableToolbar'
+import boundaries from '../geojson/boundaries.geojson'
 import { confirmAlert } from 'react-confirm-alert'
 import getFarmLocations from '../api/getFarmLocations'
 import getFarmerLocations from '../api/getFarmerLocations'
@@ -27,6 +28,7 @@ import mapMarker from '../mapMarker'
 import mapSource from '../mapSource'
 import mapboxgl from 'mapbox-gl'
 import { navigate } from '@reach/router'
+import { toast } from 'react-toastify'
 
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
 mapboxgl.prewarm()
@@ -46,6 +48,7 @@ function FarmerMap() {
   // INPUT STATE
   const [farmer_locations_filter, setFarmerLocationsFilter] = React.useState(true)
   const [farm_locations_filter, setFarmLocationsFilter] = React.useState(true)
+  const [boundaries_filter, setBoundariesFilter] = React.useState(true)
   const [census, setCensus] = React.useState(2022)
   const [address_province, setAddressProvince] = React.useState(Account.vicinity_province)
   const [address_municipality, setAddressMunicipality] = React.useState(Account.vicinity_municipality)
@@ -158,6 +161,20 @@ function FarmerMap() {
         // DIGITAL ELEVATION MODEL
         mapDEM(map)
 
+        // QUIRINO BARANGAY BOUNDARIES
+        map.addSource('boundaries', { type: 'geojson', data: boundaries })
+        mapLayer.boundaries(map)
+        map.on('click', 'boundaries-fill-layer', (e) => {
+          const properties = e.features[0].properties
+          toast.info(
+            <div>
+              {properties.BRGY || 'N/A'}, {properties.MUN}
+              <br />
+              Area: {properties.AREA__HA_?.toLocaleString()} hectares
+            </div>
+          )
+        })
+
         // FARMER LOCATIONS
         map.addImage(FARMER_LOCATIONS, mapMarker(100, FARMER_LOCATIONS_COLOR, map), { pixelRatio: 2 })
         mapSource(map, FARMER_LOCATIONS, { type: 'geojson', data: farmer_geojson, cluster: true })
@@ -222,6 +239,9 @@ function FarmerMap() {
       toggleMapLayer(map, 'farm-locations-cluster-count-layer', farm_locations_filter)
       toggleMapLayer(map, 'farm-locations-unclustered-point-layer', farm_locations_filter)
 
+      toggleMapLayer(map, 'boundaries-fill-layer', boundaries_filter)
+      toggleMapLayer(map, 'boundaries-line-layer', boundaries_filter)
+
       toggleMapLayer(map, 'landslide_very_high_layer', landslide_very_high_filter)
       toggleMapLayer(map, 'landslide_high_layer', landslide_high_filter)
       toggleMapLayer(map, 'landslide_moderate_layer', landslide_moderate_filter)
@@ -235,6 +255,7 @@ function FarmerMap() {
     map,
     farmer_locations_filter,
     farm_locations_filter,
+    boundaries_filter,
     landslide_low_filter,
     landslide_moderate_filter,
     landslide_very_high_filter,
@@ -277,11 +298,26 @@ function FarmerMap() {
           </TableToolbar>
           <SearchBox className={display ? 'display' : 'hidden'}>
             <FormRow>
-              <Field label="Farmer Locations" status={status}>
-                <Checkbox checked={farmer_locations_filter} onChange={(e) => setFarmerLocationsFilter(e.target.checked)} text="Display" />
+              <Field label="Boundaries" status={status}>
+                <Checkbox
+                  checked={boundaries_filter}
+                  onChange={(e) => setBoundariesFilter(e.target.checked)}
+                  text={boundaries_filter ? 'Display' : 'Hidden'}
+                />
               </Field>
-              <Field label="Farm Locations" status={status}>
-                <Checkbox checked={farm_locations_filter} onChange={(e) => setFarmLocationsFilter(e.target.checked)} text="Display" />
+              <Field label="Farmer" status={status}>
+                <Checkbox
+                  checked={farmer_locations_filter}
+                  onChange={(e) => setFarmerLocationsFilter(e.target.checked)}
+                  text={farmer_locations_filter ? 'Display' : 'Hidden'}
+                />
+              </Field>
+              <Field label="Farm" status={status}>
+                <Checkbox
+                  checked={farm_locations_filter}
+                  onChange={(e) => setFarmLocationsFilter(e.target.checked)}
+                  text={farm_locations_filter ? 'Display' : 'Hidden'}
+                />
               </Field>
             </FormRow>
             <FormRow>

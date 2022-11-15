@@ -1,4 +1,24 @@
 export default mapLayer = {
+  boundaries: function (map) {
+    map.addLayer({
+      id: 'boundaries-fill-layer',
+      type: 'fill',
+      source: 'boundaries',
+      paint: {
+        'fill-color': 'rgba(255, 255, 255, 0)',
+        'fill-outline-color': '#F77B07'
+      }
+    })
+    map.addLayer({
+      id: 'boundaries-line-layer',
+      type: 'line',
+      source: 'boundaries',
+      paint: {
+        'line-width': 3,
+        'line-color': '#DF9C20'
+      }
+    })
+  },
   cluster: function (map, name, color) {
     map.addLayer({
       id: name + '-cluster-layer',
@@ -12,7 +32,8 @@ export default mapLayer = {
         'circle-color': ['step', ['get', 'point_count'], '#FFFFFF', 100, '#FFFFFF', 750, '#FFFFFF'],
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
         'circle-stroke-color': color,
-        'circle-stroke-width': 5
+        'circle-stroke-width': 5,
+        'circle-opacity': 0.8
       }
     })
   },
