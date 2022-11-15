@@ -2,17 +2,18 @@ import './HighValueCrops.css'
 
 import { VictoryPie, VictoryTooltip } from 'victory'
 
-import Box from '../components/Box'
+import Box from '../../components/Box'
 import React from 'react'
-import Table from '../components/Table'
-import Text from '../components/Text'
+import Table from '../../components/Table'
+import Text from '../../components/Text'
 
 function HighValueCrops() {
   return (
     <div className="high-value-crops">
-      <div className="high-value-crops-item">
+      <div>
         <VictoryPie
           height={250}
+          labels={() => null}
           padding={0}
           innerRadius={50}
           colorScale={['#DF2020', '#DF9C20', '#DFDF20', '#20DF20', '#20A8DF', '#D020DF', '#DF207C']}
@@ -31,14 +32,15 @@ function HighValueCrops() {
           ]}
         />
       </div>
-      <div className="high-value-crops-item">
-        <Table className="no-click" headers={['Legend', 'Variety', 'Area']}>
+      <div>
+        <Table className="no-click" headers={['Legend', 'Variety', 'Hectares', 'Farmer']}>
           <tr>
             <td>
               <div className="box-red" />
             </td>
             <td>Banana</td>
             <td>41</td>
+            <td>87</td>
           </tr>
           <tr>
             <td>
@@ -46,6 +48,7 @@ function HighValueCrops() {
             </td>
             <td>Cacao</td>
             <td>59</td>
+            <td>63</td>
           </tr>
           <tr>
             <td>
@@ -53,6 +56,7 @@ function HighValueCrops() {
             </td>
             <td>Coffee</td>
             <td>17</td>
+            <td>64</td>
           </tr>
           <tr>
             <td>
@@ -60,6 +64,7 @@ function HighValueCrops() {
             </td>
             <td>Fruit Trees</td>
             <td>32</td>
+            <td>83</td>
           </tr>
           <tr>
             <td>
@@ -67,6 +72,7 @@ function HighValueCrops() {
             </td>
             <td>Root Crops</td>
             <td>41</td>
+            <td>76</td>
           </tr>
           <tr>
             <td>
@@ -74,6 +80,7 @@ function HighValueCrops() {
             </td>
             <td>Spices</td>
             <td>35</td>
+            <td>25</td>
           </tr>
           <tr>
             <td>
@@ -81,16 +88,15 @@ function HighValueCrops() {
             </td>
             <td>Vegetables</td>
             <td>56</td>
+            <td>46</td>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>378</td>
+            <td>489</td>
           </tr>
         </Table>
-      </div>
-      <div className="high-value-crops-item">
-        <Box>
-          <Text orange>High Value Crops</Text>
-          <Text>Total Area</Text>
-          <Text two>281</Text>
-          <Text>Hectares</Text>
-        </Box>
       </div>
     </div>
   )

@@ -1,0 +1,7 @@
+.total-farmers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 1rem;
+  row-gap: 1rem;
+}

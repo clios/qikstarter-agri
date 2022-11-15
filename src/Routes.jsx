@@ -11,6 +11,7 @@ import EvacuationTabs from './layouts/EvacuationTabs'
 import FarmCreate from './pages/FarmCreate'
 import FarmUpdate from './pages/FarmUpdate'
 import FarmerCreate from './pages/FarmerCreate'
+import FarmerDashboard from './pages/FarmerDashboard'
 import FarmerInformation from './pages/FarmerInformation'
 import FarmerMap from './pages/FarmerMap'
 import FarmerRecords from './pages/FarmerRecords'
@@ -24,13 +25,6 @@ import IncidentTabs from './layouts/IncidentTabs'
 import PopulationDashboard from './pages/PopulationDashboard'
 import PopulationTabs from './layouts/PopulationTabs'
 import React from 'react'
-import ResidentCreate from './pages/ResidentCreate'
-import ResidentDashboard from './pages/ResidentDashboard'
-import ResidentMap from './pages/ResidentMap'
-import ResidentProfile from './pages/ResidentProfile'
-import ResidentRecords from './pages/ResidentRecords'
-import ResidentTabs from './layouts/ResidentTabs'
-import ResidentUpdate from './pages/ResidentUpdate'
 import RoadLifelineFlood from './pages/RoadLifelineFlood'
 import RoadLifelineLandslide from './pages/RoadLifelineLandslide'
 import RoadLifelineTabs from './layouts/RoadLifelineTabs'
@@ -100,18 +94,9 @@ function Routes() {
           <EvacuationCenterMap path="/map" />
         </EvacuationTabs>
 
-        <Redirect from="/residents" to="/residents/dashboard" noThrow />
-        <ResidentTabs path="residents">
-          <ResidentDashboard path="/dashboard" />
-          <ResidentRecords path="/records" />
-          <ResidentCreate path="/records/add" />
-          <ResidentProfile path="/records/:resident_id" />
-          <ResidentUpdate path="/records/:resident_id/edit" />
-          <ResidentMap path="/map" />
-        </ResidentTabs>
-
         <Redirect from="/farmers" to="/farmers/dashboard" noThrow />
         <FarmerTabs path="farmers">
+          <FarmerDashboard path="/dashboard" />
           <FarmerRecords path="/records" />
           <FarmerCreate path="/records/add" />
           <FarmerInformation path="/records/:farmer_id" />

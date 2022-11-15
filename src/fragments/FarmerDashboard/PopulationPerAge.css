@@ -1,0 +1,21 @@
+.population-per-age {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+}
+
+.population-per-age-chart {
+  display: grid;
+  justify-items: center;
+}
+
+.population-per-age-legend {
+  display: flex;
+  column-gap: 5rem;
+}
+
+.population-per-age-legend-item {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}

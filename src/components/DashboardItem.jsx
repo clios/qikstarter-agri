@@ -2,10 +2,10 @@ import './DashboardItem.css'
 
 import CustomSkeleton from './CustomSkeleton'
 import React from 'react'
-import Text from './Text'
+import Text from '../components/Text'
 
 function DashboardItem(props) {
-  let style_name = ['dashboard-item bg-dark', props.className].filter(Boolean).join(' ')
+  let style_name = ['dashboard-item', props.className].filter(Boolean).join(' ')
 
   if (props.status === 'loading')
     return (
