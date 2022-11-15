@@ -1,42 +1,40 @@
-import 'leaflet.bigimage'
-
 import { DPI, Format, MapboxExportControl, PageOrientation, Size } from '@watergis/mapbox-gl-export'
-import { Filter20, Printer20, Reset20 } from '@carbon/icons-react'
+import { Filter20, Reset20 } from '@carbon/icons-react'
 
 import AccountContext from '../contexts/AccountContext'
 import Address from '../Address'
 import Authorization from '../components/Authorization'
 import ButtonIcon from '../components/ButtonIcon'
 import Checkbox from '../components/Checkbox'
+import Disasters from '../Disasters'
 import FadeAnimation from '../components/FadeAnimation'
 import Field from '../components/Field'
 import FormRow from '../components/FormRow'
-import Input from '../components/Input'
-import L from 'leaflet'
 import Loader from '../components/Loader'
-import { MapboxStyleSwitcherControl } from 'mapbox-gl-style-switcher'
 import PageContent from '../components/PageContent'
 import React from 'react'
 import SearchBox from '../components/SearchBox'
 import Select from '../components/Select'
 import TableToolbar from '../components/TableToolbar'
 import { confirmAlert } from 'react-confirm-alert'
-import flood_high from '../geojson/flood_high.geojson'
-import flood_low from '../geojson/flood_low.geojson'
-import flood_moderate from '../geojson/flood_moderate.geojson'
-import flood_very_high from '../geojson/flood_very_high.geojson'
 import getFarmLocations from '../api/getFarmLocations'
 import getFarmerLocations from '../api/getFarmerLocations'
-import landslide_high from '../geojson/landslide_high.geojson'
-import landslide_low from '../geojson/landslide_low.geojson'
-import landslide_moderate from '../geojson/landslide_moderate.geojson'
-import landslide_very_high from '../geojson/landslide_very_high.geojson'
+import mapDEM from '../mapDEM'
+import mapEvent from '../mapEvent'
+import mapGeoJSON from '../mapGeoJSON'
+import mapLayer from '../mapLayer'
 import mapMarker from '../mapMarker'
+import mapSource from '../mapSource'
 import mapboxgl from 'mapbox-gl'
 import { navigate } from '@reach/router'
 
 mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
 mapboxgl.prewarm()
+
+const FARMER_LOCATIONS = 'farmer-locations'
+const FARMER_LOCATIONS_COLOR = '#20A8DF'
+const FARM_LOCATIONS = 'farm-locations'
+const FARM_LOCATIONS_COLOR = '#DF9C20'
 
 function FarmerMap() {
   // INFORMATION STATE
@@ -129,366 +127,109 @@ function FarmerMap() {
     }
   }, [map])
 
-  // ON LOAD FARMER DATA
+  // ON LOAD FARMER AND FARM DATA
   React.useEffect(() => {
     setStatus('loading')
     if (map && FarmerLocations.data && FarmLocations.data) {
       map.resize()
 
-      map.on('idle', () => {
-        setStatus('success')
+      // CREATE FARMER GEOJSON
+      const farmer_records = FarmerLocations.data.records
+      const farmer_geojson = mapGeoJSON(map, FARMER_LOCATIONS, farmer_records, (item) => {
+        return {
+          'type': 'Feature',
+          'geometry': { 'type': 'Point', 'coordinates': [item.longitude, item.latitude] },
+          'properties': { 'id': item.id, 'name': item.name }
+        }
       })
 
-      // CREATE FARMER GEOJSON
-      let farmer_geojson = { 'type': 'FeatureCollection', 'features': [] }
-      FarmerLocations.data.records?.forEach((f) =>
-        farmer_geojson.features.push({
-          'type': 'Feature',
-          'geometry': { 'type': 'Point', 'coordinates': [f.longitude, f.latitude] },
-          'properties': { 'id': f.id, 'name': f.name }
-        })
-      )
-      if (map.getSource('farmer-locations-src')) map.getSource('farmer-locations-src').setData(farmer_geojson)
-
       // CREATE FARM GEOJSON
-      let farm_geojson = { 'type': 'FeatureCollection', 'features': [] }
-      FarmLocations.data.records?.forEach((f) =>
-        farm_geojson.features.push({
+      const farm_records = FarmLocations.data.records
+      const farm_geojson = mapGeoJSON(map, FARM_LOCATIONS, farm_records, (item) => {
+        return {
           'type': 'Feature',
-          'geometry': { 'type': 'Point', 'coordinates': [f.longitude, f.latitude] },
-          'properties': { 'id': f.id, 'farmer_id': f.farmer_id, 'farmer_name': f.farmer_name }
-        })
-      )
-      if (map.getSource('farm-locations-src')) map.getSource('farm-locations-src').setData(farm_geojson)
+          'geometry': { 'type': 'Point', 'coordinates': [item.longitude, item.latitude] },
+          'properties': { 'id': item.id, 'farmer_id': item.farmer_id, 'farmer_name': item.farmer_name }
+        }
+      })
 
-      // ON LOAD OF STYLE DATA
+      // ON LOAD
       map.on('load', () => {
         // DIGITAL ELEVATION MODEL
-        if (!map.getSource('mapbox-dem-src')) {
-          map.addSource('mapbox-dem-src', { 'type': 'raster-dem', 'url': 'mapbox://mapbox.mapbox-terrain-dem-v1', 'tileSize': 512, 'maxzoom': 14 })
-          map.setTerrain({ 'source': 'mapbox-dem-src', 'exaggeration': 2 })
-          map.setFog({ 'horizon-blend': 0.3, 'color': '#f8f0e3', 'high-color': '#add8e6', 'space-color': '#d8f2ff', 'star-intensity': 0.0 })
-        }
+        mapDEM(map)
 
-        // ADD SOURCE FARMER LOCATIONS
-        if (!map.getSource('farmer-locations-src')) {
-          map.addSource('farmer-locations-src', {
-            type: 'geojson',
-            data: farmer_geojson,
-            cluster: true,
-            clusterMaxZoom: 14,
-            clusterRadius: 50
-          })
-        }
-
-        // ADD SOURCE FARM LOCATIONS
-        if (!map.getSource('farm-locations-src')) {
-          map.addSource('farm-locations-src', {
-            type: 'geojson',
-            data: farm_geojson,
-            cluster: true,
-            clusterMaxZoom: 14,
-            clusterRadius: 50
-          })
-        }
-
-        // ADD FARMER LAYERS
-        map.addLayer({
-          id: 'farmer-locations-cluster-layer',
-          type: 'circle',
-          source: 'farmer-locations-src',
-          filter: ['has', 'point_count'],
-          paint: {
-            //   * Blue, 20px circles when point count is less than 100
-            //   * Yellow, 30px circles when point count is between 100 and 750
-            //   * Pink, 40px circles when point count is greater than or equal to 750
-            'circle-color': ['step', ['get', 'point_count'], '#FFFFFF', 100, '#FFFFFF', 750, '#FFFFFF'],
-            'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
-            'circle-stroke-color': '#20A8DF',
-            'circle-stroke-width': 5
-          }
-        })
-        map.addLayer({
-          id: 'farmer-locations-cluster-count-layer',
-          type: 'symbol',
-          source: 'farmer-locations-src',
-          filter: ['has', 'point_count'],
-          layout: {
-            'text-field': '{point_count_abbreviated}',
-            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-            'text-size': 12
-          }
-        })
-        map.addImage('farmer-mark', mapMarker(100, '#20A8DF', map), { pixelRatio: 2 })
-        map.addLayer({
-          'id': 'farmer-locations-unclustered-point-layer',
-          'type': 'symbol',
-          'source': 'farmer-locations-src',
-          'filter': ['!', ['has', 'point_count']],
-          'layout': { 'icon-image': 'farmer-mark' }
-        })
-
-        // ADD FARM LAYERS
-        map.addLayer({
-          id: 'farm-locations-cluster-layer',
-          type: 'circle',
-          source: 'farm-locations-src',
-          filter: ['has', 'point_count'],
-          paint: {
-            //   * Blue, 20px circles when point count is less than 100
-            //   * Yellow, 30px circles when point count is between 100 and 750
-            //   * Pink, 40px circles when point count is greater than or equal to 750
-            'circle-color': ['step', ['get', 'point_count'], '#FFFFFF', 100, '#FFFFFF', 750, '#FFFFFF'],
-            'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
-            'circle-stroke-color': '#DF9C20',
-            'circle-stroke-width': 5
-          }
-        })
-        map.addLayer({
-          id: 'farm-locations-cluster-count-layer',
-          type: 'symbol',
-          source: 'farm-locations-src',
-          filter: ['has', 'point_count'],
-          layout: {
-            'text-field': '{point_count_abbreviated}',
-            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-            'text-size': 12
-          }
-        })
-        map.addImage('farm-mark', mapMarker(100, '#DF9C20', map), { pixelRatio: 2 })
-        map.addLayer({
-          'id': 'farm-locations-unclustered-point-layer',
-          'type': 'symbol',
-          'source': 'farm-locations-src',
-          'filter': ['!', ['has', 'point_count']],
-          'layout': { 'icon-image': 'farm-mark' }
-        })
-
-        // ADD FARMER LAYER EVENTS
-        map.on('click', 'farmer-locations-cluster-layer', (e) => {
-          const features = map.queryRenderedFeatures(e.point, {
-            layers: ['farmer-locations-cluster-layer']
-          })
-          const clusterId = features[0].properties.cluster_id
-          map.getSource('farmer-locations-src').getClusterExpansionZoom(clusterId, (err, zoom) => {
-            if (err) return
-            map.easeTo({
-              center: features[0].geometry.coordinates,
-              zoom: zoom + 1
-            })
-          })
-        })
-        map.on('click', 'farmer-locations-unclustered-point-layer', (e) => {
-          const id = e.features[0].properties.id
-          const name = e.features[0].properties.name
-          const coordinates = e.features[0].geometry.coordinates.slice()
-          // ZOOM IN
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
-          }
+        // FARMER LOCATIONS
+        map.addImage(FARMER_LOCATIONS, mapMarker(100, FARMER_LOCATIONS_COLOR, map), { pixelRatio: 2 })
+        mapSource(map, FARMER_LOCATIONS, { type: 'geojson', data: farmer_geojson, cluster: true })
+        mapLayer.cluster(map, FARMER_LOCATIONS, FARMER_LOCATIONS_COLOR)
+        mapLayer.clusterCount(map, FARMER_LOCATIONS)
+        mapLayer.unclusteredPoint(map, FARMER_LOCATIONS, FARMER_LOCATIONS)
+        mapEvent.mouse(map, FARMER_LOCATIONS)
+        mapEvent.clickCluster(map, FARMER_LOCATIONS)
+        mapEvent.clickUnclusteredPoint(map, FARMER_LOCATIONS, (properties) => {
           confirmAlert({
-            title: name,
+            title: properties.name,
             message: `House Location`,
-            buttons: [{ label: 'Go to records', onClick: () => navigate('/farmers/records/' + id, { replace: true }) }, { label: 'Close' }]
+            buttons: [{ label: 'Go to records', onClick: () => navigate('/farmers/records/' + properties.id) }, { label: 'Close' }]
           })
-        })
-        map.on('mouseenter', 'farmer-locations-cluster-layer', () => {
-          map.getCanvas().style.cursor = 'pointer'
-        })
-        map.on('mouseleave', 'farmer-locations-cluster-layer', () => {
-          map.getCanvas().style.cursor = ''
-        })
-        map.on('mouseenter', 'farmer-locations-unclustered-point-layer', () => {
-          map.getCanvas().style.cursor = 'pointer'
-        })
-        map.on('mouseleave', 'farmer-locations-unclustered-point-layer', () => {
-          map.getCanvas().style.cursor = ''
         })
 
-        // ADD FARM LAYER EVENTS
-        map.on('click', 'farm-locations-cluster-layer', (e) => {
-          const features = map.queryRenderedFeatures(e.point, {
-            layers: ['farm-locations-cluster-layer']
-          })
-          const clusterId = features[0].properties.cluster_id
-          map.getSource('farm-locations-src').getClusterExpansionZoom(clusterId, (err, zoom) => {
-            if (err) return
-            map.easeTo({
-              center: features[0].geometry.coordinates,
-              zoom: zoom + 1
-            })
-          })
-        })
-        map.on('click', 'farm-locations-unclustered-point-layer', (e) => {
-          const id = e.features[0].properties.farmer_id
-          const name = e.features[0].properties.farmer_name
-          const coordinates = e.features[0].geometry.coordinates.slice()
-          // ZOOM IN
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
-          }
+        // FARM LOCATIONS
+        map.addImage(FARM_LOCATIONS, mapMarker(100, FARM_LOCATIONS_COLOR, map), { pixelRatio: 2 })
+        mapSource(map, FARM_LOCATIONS, { type: 'geojson', data: farm_geojson, cluster: true })
+        mapLayer.cluster(map, FARM_LOCATIONS, FARM_LOCATIONS_COLOR)
+        mapLayer.clusterCount(map, FARM_LOCATIONS)
+        mapLayer.unclusteredPoint(map, FARM_LOCATIONS, FARM_LOCATIONS)
+        mapEvent.clickCluster(map, FARM_LOCATIONS)
+        mapEvent.mouse(map, FARM_LOCATIONS)
+        mapEvent.clickUnclusteredPoint(map, FARM_LOCATIONS, (properties) => {
           confirmAlert({
-            title: name,
+            title: properties.name,
             message: `Farm Location`,
-            buttons: [{ label: 'Go to records', onClick: () => navigate('/farmers/records/' + id, { replace: true }) }, { label: 'Close' }]
+            buttons: [{ label: 'Go to records', onClick: () => navigate('/farmers/records/' + properties.farmer_id) }, { label: 'Close' }]
           })
         })
-        map.on('mouseenter', 'farm-locations-cluster-layer', () => {
-          map.getCanvas().style.cursor = 'pointer'
-        })
-        map.on('mouseleave', 'farm-locations-cluster-layer', () => {
-          map.getCanvas().style.cursor = ''
-        })
-        map.on('mouseenter', 'farm-locations-unclustered-point-layer', () => {
-          map.getCanvas().style.cursor = 'pointer'
-        })
-        map.on('mouseleave', 'farm-locations-unclustered-point-layer', () => {
-          map.getCanvas().style.cursor = ''
-        })
 
-        // LANDSLIDE VERY HIGH SUSCEPTIBILITY
-        if (!map.getSource('landslide_very_high_src')) {
-          map.addSource('landslide_very_high_src', { 'type': 'geojson', 'data': landslide_very_high })
-          map.addLayer({
-            'id': 'landslide_very_high_layer',
-            'source': 'landslide_very_high_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#DF2020', 'fill-opacity': 0.5 }
-          })
-        }
+        // ADD DISASTERS POLYGON ON MAP
+        Disasters.landslide.veryHigh(map)
+        Disasters.landslide.high(map)
+        Disasters.landslide.moderate(map)
+        Disasters.landslide.low(map)
+        Disasters.flood.veryHigh(map)
+        Disasters.flood.high(map)
+        Disasters.flood.moderate(map)
+        Disasters.flood.low(map)
+      })
 
-        // LANDSLIDE HIGH SUSCEPTIBILITY
-        if (!map.getSource('landslide_high_src')) {
-          map.addSource('landslide_high_src', { 'type': 'geojson', 'data': landslide_high })
-          map.addLayer({
-            'id': 'landslide_high_layer',
-            'source': 'landslide_high_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#DF9C20', 'fill-opacity': 0.5 }
-          })
-        }
-
-        // LANDSLIDE MODERATE SUSCEPTIBILITY
-        if (!map.getSource('landslide_moderate_src')) {
-          map.addSource('landslide_moderate_src', { 'type': 'geojson', 'data': landslide_moderate })
-          map.addLayer({
-            'id': 'landslide_moderate_layer',
-            'source': 'landslide_moderate_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#DFDF20', 'fill-opacity': 0.5 }
-          })
-        }
-
-        // LANDSLIDE LOW SUSCEPTIBILITY
-        if (!map.getSource('landslide_low_src')) {
-          map.addSource('landslide_low_src', { 'type': 'geojson', 'data': landslide_low })
-          map.addLayer({
-            'id': 'landslide_low_layer',
-            'source': 'landslide_low_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
-          })
-        }
-
-        // FLOOD VERY HIGH SUSCEPTIBILITY
-        if (!map.getSource('flood_very_high_src')) {
-          map.addSource('flood_very_high_src', { 'type': 'geojson', 'data': flood_very_high })
-          map.addLayer({
-            'id': 'flood_very_high_layer',
-            'source': 'flood_very_high_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#DF2020', 'fill-opacity': 0.5 }
-          })
-        }
-
-        // FLOOD HIGH SUSCEPTIBILITY
-        if (!map.getSource('flood_high_src')) {
-          map.addSource('flood_high_src', { 'type': 'geojson', 'data': flood_high })
-          map.addLayer({
-            'id': 'flood_high_layer',
-            'source': 'flood_high_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#DF9C20', 'fill-opacity': 0.5 }
-          })
-        }
-
-        // FLOOD MODERATE SUSCEPTIBILITY
-        if (!map.getSource('flood_moderate_src')) {
-          map.addSource('flood_moderate_src', { 'type': 'geojson', 'data': flood_moderate })
-          map.addLayer({
-            'id': 'flood_moderate_layer',
-            'source': 'flood_moderate_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#DFDF20', 'fill-opacity': 0.5 }
-          })
-        }
-
-        // FLOOD LOW SUSCEPTIBILITY
-        if (!map.getSource('flood_low_src')) {
-          map.addSource('flood_low_src', { 'type': 'geojson', 'data': flood_low })
-          map.addLayer({
-            'id': 'flood_low_layer',
-            'source': 'flood_low_src',
-            'type': 'fill',
-            'layout': { 'visibility': 'none' },
-            'paint': { 'fill-color': '#20DF20', 'fill-opacity': 0.5 }
-          })
-        }
+      map.on('idle', () => {
+        setStatus('success')
       })
     }
   }, [map, FarmerLocations.data, FarmLocations.data])
 
+  // ADD MAP LAYER TOGGLE
   React.useEffect(() => {
     if (map) {
-      if (map.getLayer('farmer-locations-cluster-layer')) {
-        map.setLayoutProperty('farmer-locations-cluster-layer', 'visibility', farmer_locations_filter ? 'visible' : 'none')
+      function toggleMapLayer(map, layer, filter) {
+        if (map.getLayer(layer)) map.setLayoutProperty(layer, 'visibility', filter ? 'visible' : 'none')
       }
-      if (map.getLayer('farmer-locations-unclustered-point-layer')) {
-        map.setLayoutProperty('farmer-locations-unclustered-point-layer', 'visibility', farmer_locations_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('farmer-locations-cluster-count-layer')) {
-        map.setLayoutProperty('farmer-locations-cluster-count-layer', 'visibility', farmer_locations_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('farm-locations-cluster-layer')) {
-        map.setLayoutProperty('farm-locations-cluster-layer', 'visibility', farm_locations_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('farm-locations-unclustered-point-layer')) {
-        map.setLayoutProperty('farm-locations-unclustered-point-layer', 'visibility', farm_locations_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('farm-locations-cluster-count-layer')) {
-        map.setLayoutProperty('farm-locations-cluster-count-layer', 'visibility', farm_locations_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('landslide_very_high_layer')) {
-        map.setLayoutProperty('landslide_very_high_layer', 'visibility', landslide_very_high_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('landslide_high_layer')) {
-        map.setLayoutProperty('landslide_high_layer', 'visibility', landslide_high_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('landslide_moderate_layer')) {
-        map.setLayoutProperty('landslide_moderate_layer', 'visibility', landslide_moderate_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('landslide_low_layer')) {
-        map.setLayoutProperty('landslide_low_layer', 'visibility', landslide_low_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('flood_very_high_layer')) {
-        map.setLayoutProperty('flood_very_high_layer', 'visibility', flood_very_high_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('flood_high_layer')) {
-        map.setLayoutProperty('flood_high_layer', 'visibility', flood_high_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('flood_moderate_layer')) {
-        map.setLayoutProperty('flood_moderate_layer', 'visibility', flood_moderate_filter ? 'visible' : 'none')
-      }
-      if (map.getLayer('flood_low_layer')) {
-        map.setLayoutProperty('flood_low_layer', 'visibility', flood_low_filter ? 'visible' : 'none')
-      }
+
+      toggleMapLayer(map, 'farmer-locations-cluster-layer', farmer_locations_filter)
+      toggleMapLayer(map, 'farmer-locations-cluster-count-layer', farmer_locations_filter)
+      toggleMapLayer(map, 'farmer-locations-unclustered-point-layer', farmer_locations_filter)
+
+      toggleMapLayer(map, 'farm-locations-cluster-layer', farm_locations_filter)
+      toggleMapLayer(map, 'farm-locations-cluster-count-layer', farm_locations_filter)
+      toggleMapLayer(map, 'farm-locations-unclustered-point-layer', farm_locations_filter)
+
+      toggleMapLayer(map, 'landslide_very_high_layer', landslide_very_high_filter)
+      toggleMapLayer(map, 'landslide_high_layer', landslide_high_filter)
+      toggleMapLayer(map, 'landslide_moderate_layer', landslide_moderate_filter)
+      toggleMapLayer(map, 'landslide_low_layer', landslide_low_filter)
+      toggleMapLayer(map, 'flood_very_high_layer', flood_very_high_filter)
+      toggleMapLayer(map, 'flood_high_layer', flood_high_filter)
+      toggleMapLayer(map, 'flood_moderate_layer', flood_moderate_filter)
+      toggleMapLayer(map, 'flood_low_layer', flood_low_filter)
     }
   }, [
     map,
