@@ -10,6 +10,15 @@
   height: 100%;
 }
 
+.table-toolbar-main-child {
+  align-self: center;
+}
+
+.table-toolbar-main-child p {
+  color: #73858c;
+  padding-left: 1rem;
+}
+
 .table-toolbar-children {
   display: flex;
 }
