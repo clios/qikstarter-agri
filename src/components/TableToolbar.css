@@ -10,12 +10,11 @@
   height: 100%;
 }
 
-.table-toolbar-main-child {
-  align-self: center;
-}
-
 .table-toolbar-main-child p {
-  color: #73858c;
+  display: grid;
+  align-content: center;
+  height: 100%;
+  color: #e4e7e8;
   padding-left: 1rem;
 }
 

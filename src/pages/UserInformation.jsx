@@ -193,17 +193,26 @@ function UserInformation() {
                 <Close20 />
               </ButtonIcon>
             </SectionHeader>
-            <SectionHeader title="1. Personal Information" />
+            <SectionHeader title="1. Personal" />
             <SectionBody>
               <Field label="Name" status={status} text={name} />
               <Field label="Email" status={status} text={email} />
             </SectionBody>
-            <SectionHeader title="2. Office Information" />
+            <SectionHeader title="2. Office" />
             <SectionBody>
-              <Field label="Office" status={status} text={office} />
-              <Field label="Position" status={status} text={position} />
+              <Field label="Office Name" status={status} text={office} />
+              <Field label="Position / Title" status={status} text={position} />
             </SectionBody>
-            <SectionHeader title="3. Permissions">
+            <SectionHeader title="3. Vicinity">
+              <div title="Area limit of jurisdiction.">
+                <Information24 />
+              </div>
+            </SectionHeader>
+            <SectionBody>
+              <Field label="Municipality" status={status} text={`ALL MUNICIPALITIES`} />
+              <Field label="Barangay" status={status} text={`ALL BARANGAYS`} />
+            </SectionBody>
+            <SectionHeader title="4. Permissions">
               <div title="Read means the user can search, view and download records. Write means the user can create, update and delete records.">
                 <Information24 />
               </div>
@@ -237,7 +246,7 @@ function UserInformation() {
                 <Toggle available={Help.checkPermission(permissions, 'write_user') ? true : false} />
               </Field>
             </SectionBody>
-            <SectionHeader title="4. Reset Security Password">
+            <SectionHeader title="5. Reset Security Password">
               <ButtonIcon onClick={resetPassword} status={status} title="Reset password">
                 <Password20 />
               </ButtonIcon>

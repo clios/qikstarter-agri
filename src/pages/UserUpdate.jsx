@@ -154,29 +154,61 @@ function UserUpdate() {
         <FadeAnimation>
           <Form status={status}>
             <SectionHeader bigTitle="Existing User Account Form">
-              <ButtonIcon onClick={() => navigate(`/users/records/${ROUTE.user_id}`, { replace: true })} status={status} title="Close">
+              <ButtonIcon color="red" onClick={() => navigate(`/users/records/${ROUTE.user_id}`, { replace: true })} status={status} title="Close">
                 <Close20 />
               </ButtonIcon>
             </SectionHeader>
-            <SectionHeader title="1. Personal Information" />
+            <SectionHeader title="1. Personal" />
             <FormRow>
-              <Field error={helper.name} label="Full Name" status={status}>
+              <Field error={helper.name} label="Full Name (first, middle, last)" status={status}>
                 <Input uppercase onChange={(e) => setName(e.target.value)} required size={30} type="text" value={name} />
               </Field>
               <Field error={helper.email} label="Email" status={status}>
                 <Input onChange={(e) => setEmail(e.target.value)} required size={30} type="email" value={email} />
               </Field>
             </FormRow>
-            <SectionHeader title="2. Office Information" />
+            <SectionHeader title="2. Office" />
             <FormRow>
-              <Field label="Office" status={status}>
+              <Field label="Office Name" status={status}>
                 <Input uppercase onChange={(e) => setOffice(e.target.value)} required size={30} type="text" value={office} />
               </Field>
-              <Field label="Position" status={status}>
+              <Field label="Position / Title" status={status}>
                 <Input uppercase onChange={(e) => setPosition(e.target.value)} required size={30} type="text" value={position} />
               </Field>
             </FormRow>
-            <SectionHeader title="3. Permissions">
+            <SectionHeader title="3. Vicinity">
+              <div title="Area limit of jurisdiction.">
+                <Information24 />
+              </div>
+            </SectionHeader>
+            <FormRow>
+              <Field label="Municipality" status={status}>
+                <Select
+                  onChange={(e) => {
+                    setVicinityBarangay('')
+                    setVicinityMunicipality(e.target.value)
+                  }}
+                  value={vicinity_municipality}>
+                  <option value="">ALL MUNICIPALITIES</option>
+                  {Address.Municipalities('02', vicinity_province).map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+              <Field label="Barangay" status={status}>
+                <Select onChange={(e) => setVicinityBarangay(e.target.value)} value={vicinity_barangay}>
+                  <option value="">ALL BARANGAYS</option>
+                  {Address.Barangays('02', vicinity_province, vicinity_municipality).map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+            </FormRow>
+            <SectionHeader title="4. Permissions">
               <div title="Read means the user can search, view and download records. Write means the user can create, update and delete records.">
                 <Information24 />
               </div>

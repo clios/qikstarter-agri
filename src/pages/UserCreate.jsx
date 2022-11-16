@@ -99,10 +99,10 @@ function UserCreate() {
         read_user && 'read_user',
         write_user && 'write_user'
       ].filter(Boolean),
-      password: password
-      // vicinity_barangay: vicinity_barangay,
-      // vicinity_municipality: vicinity_municipality,
-      // vicinity_province: vicinity_province
+      password: password,
+      vicinity_barangay: vicinity_barangay,
+      vicinity_municipality: vicinity_municipality,
+      vicinity_province: vicinity_province
     }
     const CONFIG = { headers: { Authorization: `Bearer ${localStorage.getItem('q-agri-web-token')}` } }
 
@@ -135,36 +135,34 @@ function UserCreate() {
         <FadeAnimation>
           <Form status={status}>
             <SectionHeader bigTitle="New User Account Form">
-              <ButtonIcon onClick={() => navigate('/users/records', { replace: true })} status={status} title="Close">
+              <ButtonIcon color="red" onClick={() => navigate('/users/records', { replace: true })} status={status} title="Close">
                 <Close20 />
               </ButtonIcon>
             </SectionHeader>
-            <SectionHeader title="1. Personal Information" />
+            <SectionHeader title="1. Personal" />
             <FormRow>
-              <Field error={helper.name} label="Full Name" status={status}>
+              <Field error={helper.name} label="Full Name (first, middle, last)" status={status}>
                 <Input uppercase onChange={(e) => setName(e.target.value)} required size={30} type="text" value={name} />
               </Field>
               <Field error={helper.email} label="Email" status={status}>
                 <Input onChange={(e) => setEmail(e.target.value)} required size={30} type="email" value={email} />
               </Field>
             </FormRow>
-            <SectionHeader title="2. Office Information" />
+            <SectionHeader title="2. Office" />
             <FormRow>
-              <Field label="Office" status={status}>
+              <Field label="Office Name" status={status}>
                 <Input uppercase onChange={(e) => setOffice(e.target.value)} required size={30} type="text" value={office} />
               </Field>
-              <Field label="Position" status={status}>
+              <Field label="Position / Title" status={status}>
                 <Input uppercase onChange={(e) => setPosition(e.target.value)} required size={30} type="text" value={position} />
               </Field>
             </FormRow>
-            {/* <SectionHeader title="Area of Responsibility" />
+            <SectionHeader title="3. Vicinity">
+              <div title="Area limit of jurisdiction.">
+                <Information24 />
+              </div>
+            </SectionHeader>
             <FormRow>
-              <Field label="Region" status={status}>
-                <Input disabled defaultValue="02" size={5} type="text" />
-              </Field>
-              <Field label="Province" status={status}>
-                <Input disabled onChange={(e) => setVicinityProvince(e.target.value)} required size={10} type="text" value={vicinity_province} />
-              </Field>
               <Field label="Municipality" status={status}>
                 <Select
                   onChange={(e) => {
@@ -173,7 +171,7 @@ function UserCreate() {
                   }}
                   value={vicinity_municipality}>
                   <option value="">ALL MUNICIPALITIES</option>
-                  {Address.getMunicipalityList('02', vicinity_province).map((item, index) => (
+                  {Address.Municipalities('02', vicinity_province).map((item, index) => (
                     <option key={index} value={item}>
                       {item}
                     </option>
@@ -183,15 +181,15 @@ function UserCreate() {
               <Field label="Barangay" status={status}>
                 <Select onChange={(e) => setVicinityBarangay(e.target.value)} value={vicinity_barangay}>
                   <option value="">ALL BARANGAYS</option>
-                  {Address.getBarangayList('02', vicinity_province, vicinity_municipality).map((item, index) => (
+                  {Address.Barangays('02', vicinity_province, vicinity_municipality).map((item, index) => (
                     <option key={index} value={item}>
                       {item}
                     </option>
                   ))}
                 </Select>
               </Field>
-            </FormRow> */}
-            <SectionHeader title="3. Permissions">
+            </FormRow>
+            <SectionHeader title="4. Permissions">
               <div title="Read means the user can search, view and download records. Write means the user can create, update and delete records.">
                 <Information24 />
               </div>
@@ -216,7 +214,7 @@ function UserCreate() {
               <Checkbox checked={read_user} onChange={(e) => setReadUser(e.target.checked)} text="Read User Accounts" />
               <Checkbox checked={write_user} onChange={(e) => setWriteUser(e.target.checked)} text="Write User Accounts" />
             </FormRow>
-            <SectionHeader title="4. User Access Ticket" />
+            <SectionHeader title="5. User Access Ticket" />
             <FormRow>
               <div id="UserAccessTicket" className="uat">
                 <p className="uat-title">User Access Ticket</p>
