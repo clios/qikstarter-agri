@@ -134,18 +134,12 @@ function FarmerDashboard() {
           <DashboardContent>
             <DashboardItem title="Farmer Population" status={status}>
               <TotalFarmers
-                total_farmers
-                total_farmers_male
-                total_farmers_female
-                total_farmers_owner
-                total_farmers_owner_male
-                total_farmers_owner_female
-                total_farmers_tenant
-                total_farmers_tenant_male
-                total_farmers_tenant_female
-                total_farmers_laborer
-                total_farmers_laborer_male
-                total_farmers_laborer_female
+                total_farmers={121071}
+                total_farmers_male={59837}
+                total_farmers_female={61234}
+                total_farmers_owner={263}
+                total_farmers_tenant={345}
+                total_farmers_laborer={1834}
               />
             </DashboardItem>
           </DashboardContent>
@@ -153,24 +147,24 @@ function FarmerDashboard() {
           <DashboardContent>
             <DashboardItem title="Farmer Per Age" status={status}>
               <PopulationPerAge
-                total_farmers_below_20
-                total_farmers_below_20_male
-                total_farmers_below_20_female
-                total_farmers_20_to_29
-                total_farmers_20_to_29_male
-                total_farmers_20_to_29_female
-                total_farmers_30_to_39
-                total_farmers_30_to_39_male
-                total_farmers_30_to_39_female
-                total_farmers_40_to_49
-                total_farmers_40_to_49_male
-                total_farmers_40_to_49_female
-                total_farmers_50_to_59
-                total_farmers_50_to_59_male
-                total_farmers_50_to_59_female
-                total_farmers_above_59
-                total_farmers_above_59_male
-                total_farmers_above_59_female
+                total_farmers_below_20={30}
+                total_farmers_below_20_male={20}
+                total_farmers_below_20_female={10}
+                total_farmers_20_to_29={1246}
+                total_farmers_20_to_29_male={263}
+                total_farmers_20_to_29_female={127}
+                total_farmers_30_to_39={2457}
+                total_farmers_30_to_39_male={2049}
+                total_farmers_30_to_39_female={394}
+                total_farmers_40_to_49={3476}
+                total_farmers_40_to_49_male={3095}
+                total_farmers_40_to_49_female={409}
+                total_farmers_50_to_59={2921}
+                total_farmers_50_to_59_male={1023}
+                total_farmers_50_to_59_female={192}
+                total_farmers_above_59={509}
+                total_farmers_above_59_male={309}
+                total_farmers_above_59_female={12}
               />
             </DashboardItem>
           </DashboardContent>
@@ -178,59 +172,59 @@ function FarmerDashboard() {
           <DashboardContent>
             <DashboardItem title="Farmer Per Civil Status" status={status}>
               <PopulationPerCivilStatus
-                total_farmers_single
-                total_farmers_single_male
-                total_farmers_single_female
-                total_farmers_living_in
-                total_farmers_living_in_male
-                total_farmers_living_in_female
-                total_farmers_married
-                total_farmers_married_male
-                total_farmers_married_female
-                total_farmers_divorced
-                total_farmers_divorced_male
-                total_farmers_divorced_female
-                total_farmers_separated
-                total_farmers_separated_male
-                total_farmers_separated_female
-                total_farmers_widowed
-                total_farmers_widowed_male
-                total_farmers_widowed_female
+                total_farmers_single={5923}
+                total_farmers_single_male={2376}
+                total_farmers_single_female={3278}
+                total_farmers_living_in={4561}
+                total_farmers_living_in_male={6076}
+                total_farmers_living_in_female={1045}
+                total_farmers_married={9673}
+                total_farmers_married_male={4973}
+                total_farmers_married_female={5278}
+                total_farmers_divorced={281}
+                total_farmers_divorced_male={198}
+                total_farmers_divorced_female={57}
+                total_farmers_separated={1072}
+                total_farmers_separated_male={3095}
+                total_farmers_separated_female={1209}
+                total_farmers_widowed={4983}
+                total_farmers_widowed_male={597}
+                total_farmers_widowed_female={519}
               />
             </DashboardItem>
           </DashboardContent>
 
           <DashboardContent>
             <DashboardItem title="Rice Area" status={status}>
-              <RiceArea total_rice_area total_rice_area_from_farmers />
+              <RiceArea total_rice_area={7645} total_rice_area_from_farmers={3795} />
             </DashboardItem>
           </DashboardContent>
 
           <DashboardContent>
             <DashboardItem title="Corn Area" status={status}>
-              <CornArea total_corn_area total_corn_area_from_farmers />
+              <CornArea total_corn_area={7645} total_corn_area_from_farmers={3795} />
             </DashboardItem>
           </DashboardContent>
 
           <DashboardContent>
             <DashboardItem title="High Value Crops Area" status={status}>
               <HighValueCrops
-                total_hvc_area
-                total_hvc_area_from_farmers
-                total_hvc_banana_area
-                total_hvc_banana_area_from_farmers
-                total_hvc_cacao_area
-                total_hvc_cacao_area_from_farmers
-                total_hvc_coffee_area
-                total_hvc_coffee_area_from_farmers
-                total_hvc_fruit_tree_area
-                total_hvc_fruit_tree_area_from_farmers
-                total_hvc_root_crop_area
-                total_hvc_root_crop_area_from_farmers
-                total_hvc_spice_area
-                total_hvc_spice_area_from_farmers
-                total_hvc_vegetable_area
-                total_hvc_vegetable_area_from_farmers
+                total_hvc_area={1000}
+                total_hvc_area_from_farmers={1000}
+                total_hvc_banana_area={1000}
+                total_hvc_banana_area_from_farmers={1000}
+                total_hvc_cacao_area={1000}
+                total_hvc_cacao_area_from_farmers={1000}
+                total_hvc_coffee_area={1000}
+                total_hvc_coffee_area_from_farmers={1000}
+                total_hvc_fruit_tree_area={1000}
+                total_hvc_fruit_tree_area_from_farmers={1000}
+                total_hvc_root_crop_area={1000}
+                total_hvc_root_crop_area_from_farmers={1000}
+                total_hvc_spice_area={1000}
+                total_hvc_spice_area_from_farmers={1000}
+                total_hvc_vegetable_area={1000}
+                total_hvc_vegetable_area_from_farmers={1000}
               />
             </DashboardItem>
           </DashboardContent>
@@ -244,16 +238,16 @@ function FarmerDashboard() {
           <DashboardContent>
             <DashboardItem title="Livestock" status={status}>
               <Livestock
-                total_livestock_goats
-                total_livestock_goats_from_farmers
-                total_livestock_pigs
-                total_livestock_pigs_from_farmers
-                total_livestock_cattles
-                total_livestock_cattles_from_farmers
-                total_livestock_carabaos
-                total_livestock_carabaos_from_farmers
-                total_livestock_sheeps
-                total_livestock_sheeps_from_farmers
+                total_livestock_goats={57}
+                total_livestock_goats_from_farmers={75}
+                total_livestock_pigs={37}
+                total_livestock_pigs_from_farmers={73}
+                total_livestock_cattles={61}
+                total_livestock_cattles_from_farmers={61}
+                total_livestock_carabaos={61}
+                total_livestock_carabaos_from_farmers={61}
+                total_livestock_sheeps={61}
+                total_livestock_sheeps_from_farmers={61}
               />
             </DashboardItem>
           </DashboardContent>
@@ -261,21 +255,21 @@ function FarmerDashboard() {
           <DashboardContent>
             <DashboardItem title="Poultry" status={status}>
               <Poultry
-                total_poultry_chickens
-                total_poultry_chickens_from_farmers
-                total_poultry_ducks
-                total_poultry_ducks_from_farmers
-                total_poultry_gooses
-                total_poultry_gooses_from_farmers
-                total_poultry_turkeys
-                total_poultry_turkeys_from_farmers
+                total_poultry_chickens={1000}
+                total_poultry_chickens_from_farmers={1000}
+                total_poultry_ducks={1000}
+                total_poultry_ducks_from_farmers={1000}
+                total_poultry_gooses={1000}
+                total_poultry_gooses_from_farmers={1000}
+                total_poultry_turkeys={1000}
+                total_poultry_turkeys_from_farmers={1000}
               />
             </DashboardItem>
           </DashboardContent>
 
           <DashboardContent>
             <DashboardItem title="Fish Pond" status={status}>
-              <Fishery total_fishery_area total_fishery_area_from_farmers total_fishery_fingerlings total_fishery_fingerlings_from_farmers />
+              <Fishery total_fishery_area={82192} total_fishery_area_from_farmers={2927} total_fishery_fingerlings={8192927} />
             </DashboardItem>
           </DashboardContent>
         </FadeAnimation>

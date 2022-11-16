@@ -2,10 +2,47 @@ import './PopulationPerAge.css'
 
 import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine } from 'victory'
 
+import Help from '../../Help'
 import React from 'react'
 import Table from '../../components/Table'
 
-function PopulationPerAge() {
+function PopulationPerAge(props) {
+  const farmers_below_20 = props.total_farmers_below_20
+  const farmers_below_20_male = props.total_farmers_below_20_male
+  const farmers_below_20_female = props.total_farmers_below_20_female
+  const farmers_20_to_29 = props.total_farmers_20_to_29
+  const farmers_20_to_29_male = props.total_farmers_20_to_29_male
+  const farmers_20_to_29_female = props.total_farmers_20_to_29_female
+  const farmers_30_to_39 = props.total_farmers_30_to_39
+  const farmers_30_to_39_male = props.total_farmers_30_to_39_male
+  const farmers_30_to_39_female = props.total_farmers_30_to_39_female
+  const farmers_40_to_49 = props.total_farmers_40_to_49
+  const farmers_40_to_49_male = props.total_farmers_40_to_49_male
+  const farmers_40_to_49_female = props.total_farmers_40_to_49_female
+  const farmers_50_to_59 = props.total_farmers_50_to_59
+  const farmers_50_to_59_male = props.total_farmers_50_to_59_male
+  const farmers_50_to_59_female = props.total_farmers_50_to_59_female
+  const farmers_above_59 = props.total_farmers_above_59
+  const farmers_above_59_male = props.total_farmers_above_59_male
+  const farmers_above_59_female = props.total_farmers_above_59_female
+  const farmers_male = [
+    farmers_below_20_male,
+    farmers_20_to_29_male,
+    farmers_30_to_39_male,
+    farmers_40_to_49_male,
+    farmers_50_to_59_male,
+    farmers_above_59_male
+  ].reduce((partialSum, a) => partialSum + a, 0)
+  const farmers_female = [
+    farmers_below_20_female,
+    farmers_20_to_29_female,
+    farmers_30_to_39_female,
+    farmers_40_to_49_female,
+    farmers_50_to_59_female,
+    farmers_above_59_female
+  ].reduce((partialSum, a) => partialSum + a, 0)
+  const farmers = farmers_male + farmers_female
+
   return (
     <div className="population-per-age">
       <div className="population-per-age-chart">
@@ -43,7 +80,7 @@ function PopulationPerAge() {
               },
               tickLabels: {
                 padding: 5,
-                fontSize: 10,
+                fontSize: 14,
                 fontWeight: 100,
                 fill: 'white' //CHANGE COLOR OF X-AXIS LABELS
               },
@@ -55,16 +92,12 @@ function PopulationPerAge() {
           />
           <VictoryAxis
             dependentAxis
-            tickFormat={(y) => y.toLocaleString()}
             style={{
               axis: {
-                stroke: 'white' //CHANGE COLOR OF Y-AXIS
+                stroke: 'none'
               },
               tickLabels: {
-                padding: 5,
-                fontSize: 10,
-                fontWeight: 'lighter',
-                fill: 'white' //CHANGE COLOR OF Y-AXIS LABELS
+                fill: 'none' //CHANGE COLOR OF Y-AXIS LABELS
               },
               grid: {
                 stroke: 'grey', //CHANGE COLOR OF Y-AXIS GRID LINES
@@ -76,12 +109,12 @@ function PopulationPerAge() {
           <VictoryLine
             style={{ data: { stroke: '#20DF20', strokeWidth: 1 } }}
             data={[
-              { x: 'Below 20', y: 30 },
-              { x: '20 - 29', y: 1246 },
-              { x: '30 - 39 ', y: 2457 },
-              { x: '40 - 49 ', y: 3476 },
-              { x: '50 - 59 ', y: 2921 },
-              { x: 'Above 60', y: 509 }
+              { x: 'Below 20', y: farmers_below_20 },
+              { x: '20-29', y: farmers_20_to_29 },
+              { x: '30-39 ', y: farmers_30_to_39 },
+              { x: '40-49 ', y: farmers_40_to_49 },
+              { x: '50-59 ', y: farmers_50_to_59 },
+              { x: 'Above 60', y: farmers_above_59 }
             ]}
             // labels={({ datum }) => datum.y.toLocaleString()}
             labelComponent={<VictoryLabel dy={-5} style={{ fontSize: 8, fill: '#20DF20' }} />}
@@ -90,12 +123,12 @@ function PopulationPerAge() {
           <VictoryLine
             style={{ data: { stroke: '#20A8DF', strokeWidth: 1 } }}
             data={[
-              { x: 'Below 20', y: 20 },
-              { x: '20 - 29', y: 263 },
-              { x: '30 - 39 ', y: 2049 },
-              { x: '40 - 49 ', y: 3095 },
-              { x: '50 - 59 ', y: 1023 },
-              { x: 'Above 60', y: 309 }
+              { x: 'Below 20', y: farmers_below_20_male },
+              { x: '20-29', y: farmers_20_to_29_male },
+              { x: '30-39 ', y: farmers_30_to_39_male },
+              { x: '40-49 ', y: farmers_40_to_49_male },
+              { x: '50-59 ', y: farmers_50_to_59_male },
+              { x: 'Above 60', y: farmers_above_59_male }
             ]}
             // labels={({ datum }) => datum.y.toLocaleString()}
             labelComponent={<VictoryLabel dy={-5} style={{ fontSize: 8, fill: '#20A8DF' }} />}
@@ -104,12 +137,12 @@ function PopulationPerAge() {
           <VictoryLine
             style={{ data: { stroke: '#DFDF20', strokeWidth: 1 } }}
             data={[
-              { x: 'Below 20', y: 10 },
-              { x: '20 - 29', y: 127 },
-              { x: '30 - 39 ', y: 394 },
-              { x: '40 - 49 ', y: 409 },
-              { x: '50 - 59 ', y: 192 },
-              { x: 'Above 60', y: 12 }
+              { x: 'Below 20', y: farmers_below_20_female },
+              { x: '20-29', y: farmers_20_to_29_female },
+              { x: '30-39 ', y: farmers_30_to_39_female },
+              { x: '40-49 ', y: farmers_40_to_49_female },
+              { x: '50-59 ', y: farmers_50_to_59_female },
+              { x: 'Above 60', y: farmers_above_59_female }
             ]}
             // labels={({ datum }) => datum.y.toLocaleString()}
             labelComponent={<VictoryLabel dy={-5} style={{ fontSize: 8, fill: '#DFDF20' }} />}
@@ -120,45 +153,45 @@ function PopulationPerAge() {
         <Table className="no-click" headers={['Age', 'Male', 'Female', 'Total']}>
           <tr>
             <td>Below 20</td>
-            <td>20</td>
-            <td>10</td>
-            <td>30</td>
+            <td>{Help.displayNumberWithComma(farmers_below_20_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_below_20_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_below_20)}</td>
           </tr>
           <tr>
             <td>20 - 29</td>
-            <td>263</td>
-            <td>127</td>
-            <td>1246</td>
+            <td>{Help.displayNumberWithComma(farmers_20_to_29_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_20_to_29_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_20_to_29)}</td>
           </tr>
           <tr>
             <td>30 - 39</td>
-            <td>2049</td>
-            <td>394</td>
-            <td>2457</td>
+            <td>{Help.displayNumberWithComma(farmers_30_to_39_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_30_to_39_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_30_to_39)}</td>
           </tr>
           <tr>
             <td>40 - 49</td>
-            <td>3095</td>
-            <td>409</td>
-            <td>3476</td>
+            <td>{Help.displayNumberWithComma(farmers_40_to_49_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_40_to_49_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_40_to_49)}</td>
           </tr>
           <tr>
             <td>50 - 59</td>
-            <td>1023</td>
-            <td>192</td>
-            <td>2921</td>
+            <td>{Help.displayNumberWithComma(farmers_50_to_59_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_50_to_59_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_50_to_59)}</td>
           </tr>
           <tr>
             <td>Above 59</td>
-            <td>309</td>
-            <td>12</td>
-            <td>509</td>
+            <td>{Help.displayNumberWithComma(farmers_above_59_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_above_59_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_above_59)}</td>
           </tr>
-          <tr>
-            <td>Total</td>
-            <td>6893</td>
-            <td>987</td>
-            <td>7403</td>
+          <tr className="text-green">
+            <td>-</td>
+            <td>{Help.displayNumberWithComma(farmers_male)}</td>
+            <td>{Help.displayNumberWithComma(farmers_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers)}</td>
           </tr>
         </Table>
       </div>

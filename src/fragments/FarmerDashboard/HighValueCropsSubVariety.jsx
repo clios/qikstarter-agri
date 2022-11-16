@@ -90,116 +90,116 @@ function HighValueCropsSubVariety() {
           <tr>
             <td>Banana</td>
             <td>Lakatan</td>
-            <td>41</td>
-            <td>14</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Banana</td>
             <td>Latundan</td>
-            <td>59</td>
-            <td>95</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Banana</td>
             <td>Saba</td>
-            <td>17</td>
-            <td>71</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Coffee</td>
             <td>Arabica</td>
-            <td>32</td>
-            <td>23</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Coffee</td>
             <td>Liberica</td>
-            <td>41</td>
-            <td>14</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Coffee</td>
             <td>Robusta</td>
-            <td>35</td>
-            <td>53</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Calamansi</td>
-            <td>25</td>
-            <td>52</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Guyabano</td>
-            <td>46</td>
-            <td>64</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Lemon</td>
-            <td>14</td>
-            <td>41</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Mandarin</td>
-            <td>25</td>
-            <td>52</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Mango</td>
-            <td>75</td>
-            <td>57</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Pomelo</td>
-            <td>24</td>
-            <td>42</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Fruit Tree</td>
             <td>Rambutan</td>
-            <td>45</td>
-            <td>54</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Root Crop</td>
             <td>Sweet Potato</td>
-            <td>14</td>
-            <td>41</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Root Crop</td>
             <td>Taro</td>
-            <td>53</td>
-            <td>35</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Root Crop</td>
             <td>Ube</td>
-            <td>72</td>
-            <td>27</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Spices</td>
             <td>Ginger</td>
-            <td>26</td>
-            <td>62</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
           <tr>
             <td>Spices</td>
             <td>Onion</td>
-            <td>56</td>
-            <td>65</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
-          <tr>
+          <tr className="text-green">
             <td>-</td>
             <td>-</td>
-            <td>375</td>
-            <td>482</td>
+            <td>N/A</td>
+            <td>N/A</td>
           </tr>
         </Table>
       </div>

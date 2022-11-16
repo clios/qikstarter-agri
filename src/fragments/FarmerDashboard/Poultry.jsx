@@ -3,11 +3,26 @@ import './Poultry.css'
 import { VictoryPie, VictoryTooltip } from 'victory'
 
 import Box from '../../components/Box'
+import Help from '../../Help'
 import React from 'react'
 import Table from '../../components/Table'
 import Text from '../../components/Text'
 
-function Poultry() {
+function Poultry(props) {
+  const poultry_chickens = props.total_poultry_chickens
+  const poultry_chickens_from_farmers = props.total_poultry_chickens_from_farmers
+  const poultry_ducks = props.total_poultry_ducks
+  const poultry_ducks_from_farmers = props.total_poultry_ducks_from_farmers
+  const poultry_gooses = props.total_poultry_gooses
+  const poultry_gooses_from_farmers = props.total_poultry_gooses_from_farmers
+  const poultry_turkeys = props.total_poultry_turkeys
+  const poultry_turkeys_from_farmers = props.total_poultry_turkeys_from_farmers
+  const poultry = [poultry_chickens, poultry_ducks, poultry_gooses, poultry_turkeys].reduce((partialSum, a) => partialSum + a, 0)
+  const farmers = [poultry_chickens_from_farmers, poultry_ducks_from_farmers, poultry_gooses_from_farmers, poultry_turkeys_from_farmers].reduce(
+    (partialSum, a) => partialSum + a,
+    0
+  )
+
   return (
     <div className="poultry">
       <div>
@@ -22,10 +37,10 @@ function Poultry() {
             <VictoryTooltip cornerRadius={0} flyoutPadding={{ left: 20, right: 20, bottom: 10, top: 10 }} style={{ fontSize: '16px' }} />
           }
           data={[
-            { x: 'Chicken', y: 61 },
-            { x: 'Duck', y: 26 },
-            { x: 'Goose', y: 37 },
-            { x: 'Turkey', y: 57 }
+            { x: 'Chicken', y: poultry_chickens },
+            { x: 'Duck', y: poultry_ducks },
+            { x: 'Goose', y: poultry_gooses },
+            { x: 'Turkey', y: poultry_turkeys }
           ]}
         />
       </div>
@@ -36,38 +51,38 @@ function Poultry() {
               <div className="box-red" />
             </td>
             <td>Chicken</td>
-            <td>61</td>
-            <td>16</td>
+            <td>{Help.displayNumberWithComma(poultry_chickens)}</td>
+            <td>{Help.displayNumberWithComma(poultry_chickens_from_farmers)}</td>
           </tr>
           <tr>
             <td>
               <div className="box-orange" />
             </td>
             <td>Duck</td>
-            <td>26</td>
-            <td>62</td>
+            <td>{Help.displayNumberWithComma(poultry_ducks)}</td>
+            <td>{Help.displayNumberWithComma(poultry_ducks_from_farmers)}</td>
           </tr>
           <tr>
             <td>
               <div className="box-yellow" />
             </td>
             <td>Goose</td>
-            <td>37</td>
-            <td>73</td>
+            <td>{Help.displayNumberWithComma(poultry_gooses)}</td>
+            <td>{Help.displayNumberWithComma(poultry_gooses_from_farmers)}</td>
           </tr>
           <tr>
             <td>
               <div className="box-green" />
             </td>
             <td>Turkey</td>
-            <td>57</td>
-            <td>75</td>
+            <td>{Help.displayNumberWithComma(poultry_turkeys)}</td>
+            <td>{Help.displayNumberWithComma(poultry_turkeys_from_farmers)}</td>
           </tr>
-          <tr>
+          <tr className="text-green">
             <td>-</td>
             <td>-</td>
-            <td>203</td>
-            <td>258</td>
+            <td>{Help.displayNumberWithComma(poultry)}</td>
+            <td>{Help.displayNumberWithComma(farmers)}</td>
           </tr>
         </Table>
       </div>
