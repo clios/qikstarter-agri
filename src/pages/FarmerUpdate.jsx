@@ -23,6 +23,7 @@ import React from 'react'
 import SectionBody from '../components/SectionBody'
 import SectionHeader from '../components/SectionHeader'
 import Select from '../components/Select'
+import VicinityChecker from '../components/VicinityChecker'
 import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
 import getFarmerById from '../api/getFarmerById'
@@ -139,6 +140,12 @@ function FarmerUpdate() {
 
   return (
     <Authorization permissions={Account.permissions} permission="write_farmer">
+      {status === 'success' && (
+        <VicinityChecker
+          accountVicinity={Help.displayTags([Account.vicinity_province, Account.vicinity_municipality, Account.vicinity_barangay])}
+          recordAddress={Help.displayTags([address_province, address_municipality, address_barangay])}
+        />
+      )}
       <PageContent>
         <FadeAnimation>
           <Form status={status}>

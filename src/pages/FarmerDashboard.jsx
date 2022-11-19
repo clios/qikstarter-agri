@@ -281,9 +281,9 @@ function FarmerDashboard() {
                   <option value={2021}>2021</option>
                 </Select>
               </Field>
-              {/* {Account.vicinity_municipality === '' && ( */}
               <Field label="Municipality">
                 <Select
+                  disabled={Account.vicinity_municipality !== '' ? true : false}
                   onChange={(e) => {
                     setAddressBarangay('')
                     setAddressMunicipality(e.target.value)
@@ -297,10 +297,11 @@ function FarmerDashboard() {
                   ))}
                 </Select>
               </Field>
-              {/* )} */}
-              {/* {Account.vicinity_barangay === '' && ( */}
               <Field label="Barangay">
-                <Select onChange={(e) => setAddressBarangay(e.target.value)} value={address_barangay}>
+                <Select
+                  disabled={Account.vicinity_barangay !== '' ? true : false}
+                  onChange={(e) => setAddressBarangay(e.target.value)}
+                  value={address_barangay}>
                   <option value="">ALL BARANGAYS</option>
                   {Address.Barangays('02', 'QUIRINO', address_municipality).map((item, index) => (
                     <option key={index} value={item}>
@@ -309,7 +310,6 @@ function FarmerDashboard() {
                   ))}
                 </Select>
               </Field>
-              {/* )} */}
             </FormRow>
           </SearchBox>
 

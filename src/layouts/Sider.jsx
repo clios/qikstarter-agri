@@ -64,7 +64,7 @@ function Sider({ children }) {
         {status === 'success' && (
           <Panel>
             <PanelSection>
-              <PanelLink to="/your-account" tooltip="Your Account">
+              <PanelLink to="/your-account" tooltip={`Your Account: ${Account.data.name}`}>
                 <UserAvatar24 />
               </PanelLink>
               <PanelLink permission="read_farmer" permissions={Account.data.permissions} to="/farmers" tooltip="Farmers">

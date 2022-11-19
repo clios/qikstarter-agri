@@ -80,13 +80,6 @@ function FarmerRecords() {
     setStatus('loading')
     setTimeout(() => {
       setStatus('success')
-      setPage(1)
-      setLimit(50)
-      setName('')
-      setOrders('updated_at:desc')
-      // setVicinityProvince(Account.vicinity_province)
-      // setVicinityMunicipality(Account.vicinity_municipality)
-      // setVicinityBarangay(Account.vicinity_barangay)
       Farmers.mutate()
     }, 500)
   }
@@ -148,9 +141,9 @@ function FarmerRecords() {
           </TableToolbar>
           <SearchBox className={display ? 'display' : 'hidden'}>
             <FormRow>
-              {/* {Account.vicinity_municipality === '' && ( */}
               <Field label="Municipality">
                 <Select
+                  disabled={Account.vicinity_municipality !== '' ? true : false}
                   onChange={(e) => {
                     setAddressBarangay('')
                     setAddressMunicipality(e.target.value)
@@ -164,10 +157,11 @@ function FarmerRecords() {
                   ))}
                 </Select>
               </Field>
-              {/* )} */}
-              {/* {Account.vicinity_barangay === '' && ( */}
               <Field label="Barangay">
-                <Select onChange={(e) => setAddressBarangay(e.target.value)} value={address_barangay}>
+                <Select
+                  disabled={Account.vicinity_barangay !== '' ? true : false}
+                  onChange={(e) => setAddressBarangay(e.target.value)}
+                  value={address_barangay}>
                   <option value="">ALL BARANGAYS</option>
                   {Address.Barangays('02', 'QUIRINO', address_municipality).map((item, index) => (
                     <option key={index} value={item}>
@@ -176,7 +170,6 @@ function FarmerRecords() {
                   ))}
                 </Select>
               </Field>
-              {/* )} */}
               <Field label="Order By">
                 <Select onChange={(e) => setOrders(e.target.value)} value={orders}>
                   <option value="name:desc">NAME (DESC)</option>

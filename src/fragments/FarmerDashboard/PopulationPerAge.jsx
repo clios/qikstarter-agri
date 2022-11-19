@@ -1,6 +1,6 @@
 import './PopulationPerAge.css'
 
-import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine } from 'victory'
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup, VictoryVoronoiContainer } from 'victory'
 
 import Help from '../../Help'
 import React from 'react'
@@ -62,18 +62,24 @@ function PopulationPerAge(props) {
         </div>
         <VictoryChart
           domainPadding={{
-            x: [16, 16],
+            x: [30, 30],
             y: [30, 16]
           }}
           padding={{
             left: 30,
             right: 30,
             bottom: 20,
-            top: 0
+            top: 10
           }}
-          height={180}>
+          height={180}
+          containerComponent={
+            <VictoryVoronoiContainer
+              voronoiDimension="x"
+              style={{ fontSize: 16 }}
+              labels={({ datum }) => (datum.childName === 'bar-chart-group-2-0' ? `Male: ${datum.y}` : `Female: ${datum.y}`)}
+            />
+          }>
           <VictoryAxis
-            tickLabelComponent={<VictoryLabel dy={0} dx={10} />}
             style={{
               axis: {
                 stroke: 'white' //CHANGE COLOR OF X-AXIS
@@ -92,11 +98,15 @@ function PopulationPerAge(props) {
           />
           <VictoryAxis
             dependentAxis
+            tickFormat={(y) => y.toLocaleString()}
             style={{
               axis: {
-                stroke: 'none'
+                stroke: 'none' //CHANGE COLOR OF Y-AXIS
               },
               tickLabels: {
+                padding: 5,
+                fontSize: 16,
+                fontWeight: 'lighter',
                 fill: 'none' //CHANGE COLOR OF Y-AXIS LABELS
               },
               grid: {
@@ -105,48 +115,32 @@ function PopulationPerAge(props) {
               }
             }}
           />
-          {/* TOTAL */}
-          <VictoryLine
-            style={{ data: { stroke: '#20DF20', strokeWidth: 1 } }}
-            data={[
-              { x: 'Below 20', y: farmers_below_20 },
-              { x: '20-29', y: farmers_20_to_29 },
-              { x: '30-39 ', y: farmers_30_to_39 },
-              { x: '40-49 ', y: farmers_40_to_49 },
-              { x: '50-59 ', y: farmers_50_to_59 },
-              { x: 'Above 60', y: farmers_above_59 }
-            ]}
-            // labels={({ datum }) => datum.y.toLocaleString()}
-            labelComponent={<VictoryLabel dy={-5} style={{ fontSize: 8, fill: '#20DF20' }} />}
-          />
-          {/* MALE */}
-          <VictoryLine
-            style={{ data: { stroke: '#20A8DF', strokeWidth: 1 } }}
-            data={[
-              { x: 'Below 20', y: farmers_below_20_male },
-              { x: '20-29', y: farmers_20_to_29_male },
-              { x: '30-39 ', y: farmers_30_to_39_male },
-              { x: '40-49 ', y: farmers_40_to_49_male },
-              { x: '50-59 ', y: farmers_50_to_59_male },
-              { x: 'Above 60', y: farmers_above_59_male }
-            ]}
-            // labels={({ datum }) => datum.y.toLocaleString()}
-            labelComponent={<VictoryLabel dy={-5} style={{ fontSize: 8, fill: '#20A8DF' }} />}
-          />
-          {/* FEMALE */}
-          <VictoryLine
-            style={{ data: { stroke: '#DFDF20', strokeWidth: 1 } }}
-            data={[
-              { x: 'Below 20', y: farmers_below_20_female },
-              { x: '20-29', y: farmers_20_to_29_female },
-              { x: '30-39 ', y: farmers_30_to_39_female },
-              { x: '40-49 ', y: farmers_40_to_49_female },
-              { x: '50-59 ', y: farmers_50_to_59_female },
-              { x: 'Above 60', y: farmers_above_59_female }
-            ]}
-            // labels={({ datum }) => datum.y.toLocaleString()}
-            labelComponent={<VictoryLabel dy={-5} style={{ fontSize: 8, fill: '#DFDF20' }} />}
-          />
+          <VictoryGroup offset={20} colorScale={'qualitative'}>
+            {/* MALE */}
+            <VictoryBar
+              style={{ data: { fill: '#20A8DF' }, labels: { fontSize: 9 } }}
+              data={[
+                { x: 'Below 20', y: farmers_below_20_male },
+                { x: '20-29', y: farmers_20_to_29_male },
+                { x: '30-39', y: farmers_30_to_39_male },
+                { x: '40-49 ', y: farmers_40_to_49_male },
+                { x: '50-59 ', y: farmers_50_to_59_male },
+                { x: 'Above 59 ', y: farmers_above_59_male }
+              ]}
+            />
+            {/* FEMALE */}
+            <VictoryBar
+              style={{ data: { fill: '#DFDF20' }, labels: { fontSize: 9 } }}
+              data={[
+                { x: 'Below 20', y: farmers_below_20_female },
+                { x: '20-29', y: farmers_20_to_29_female },
+                { x: '30-39', y: farmers_30_to_39_female },
+                { x: '40-49 ', y: farmers_40_to_49_female },
+                { x: '50-59 ', y: farmers_50_to_59_female },
+                { x: 'Above 59 ', y: farmers_above_59_female }
+              ]}
+            />
+          </VictoryGroup>
         </VictoryChart>
       </div>
       <div>

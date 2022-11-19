@@ -39,9 +39,8 @@ function UserCreate() {
   const [deactivated, setDeactivated] = React.useState('no')
   const [office, setOffice] = React.useState('')
   const [position, setPosition] = React.useState('')
-  const [vicinity_barangay, setVicinityBarangay] = React.useState(Account.vicinity_barangay)
-  const [vicinity_municipality, setVicinityMunicipality] = React.useState(Account.vicinity_municipality)
-  const [vicinity_province, setVicinityProvince] = React.useState('QUIRINO')
+  const [vicinity_barangay, setVicinityBarangay] = React.useState('')
+  const [vicinity_municipality, setVicinityMunicipality] = React.useState('')
   const [read_farmer, setReadFarmer] = React.useState(true)
   const [write_farmer, setWriteFarmer] = React.useState(true)
   const [read_farm, setReadFarm] = React.useState(true)
@@ -102,7 +101,7 @@ function UserCreate() {
       password: password,
       vicinity_barangay: vicinity_barangay,
       vicinity_municipality: vicinity_municipality,
-      vicinity_province: vicinity_province
+      vicinity_province: 'QUIRINO'
     }
     const CONFIG = { headers: { Authorization: `Bearer ${localStorage.getItem('q-agri-web-token')}` } }
 
@@ -171,7 +170,7 @@ function UserCreate() {
                   }}
                   value={vicinity_municipality}>
                   <option value="">ALL MUNICIPALITIES</option>
-                  {Address.Municipalities('02', vicinity_province).map((item, index) => (
+                  {Address.Municipalities('02', 'QUIRINO').map((item, index) => (
                     <option key={index} value={item}>
                       {item}
                     </option>
@@ -181,7 +180,7 @@ function UserCreate() {
               <Field label="Barangay" status={status}>
                 <Select onChange={(e) => setVicinityBarangay(e.target.value)} value={vicinity_barangay}>
                   <option value="">ALL BARANGAYS</option>
-                  {Address.Barangays('02', vicinity_province, vicinity_municipality).map((item, index) => (
+                  {Address.Barangays('02', 'QUIRINO', vicinity_municipality).map((item, index) => (
                     <option key={index} value={item}>
                       {item}
                     </option>
@@ -218,7 +217,7 @@ function UserCreate() {
             <FormRow>
               <div id="UserAccessTicket" className="uat">
                 <p className="uat-title">User Access Ticket</p>
-                <p className="uat-subtitle">Q-DRR MIS</p>
+                <p className="uat-subtitle">Q-Agri MIS</p>
                 <p className="uat-item">Name: {name?.toUpperCase() || 'N/A'}</p>
                 <p className="uat-item">Email: {email || 'N/A'}</p>
                 <p className="uat-item">Password: {password}</p>

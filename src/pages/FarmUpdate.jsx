@@ -25,13 +25,16 @@ import SectionHeader from '../components/SectionHeader'
 import Select from '../components/Select'
 import SubSection from '../components/SubSection'
 import SubSectionHeader from '../components/SubSectionHeader'
+import VicinityChecker from '../components/VicinityChecker'
 import axios from 'axios'
 import getFarmById from '../api/getFarmById'
+import getFarmerById from '../api/getFarmerById'
 import { toast } from 'react-toastify'
 
 function FarmUpdate() {
-  // SEND GET FARMER REQUEST
+  // SEND GET FARMER AND FARM REQUEST
   const ROUTE = useParams()
+  const Farmer = getFarmerById(ROUTE.farmer_id)
   const Farm = getFarmById(ROUTE.farm_id)
 
   // INFORMATION STATE
@@ -95,6 +98,23 @@ function FarmUpdate() {
   const [fishery_area, setFisheryArea] = React.useState(0)
   const [fishery_fingerlings, setFisheryFingerlings] = React.useState(0)
   // ----------------------------------------------------------------------|
+
+  // ON FETCH FARMER
+  React.useEffect(() => {
+    if (Farmer.loading) setStatus('loading')
+    if (Farmer.error) setStatus('error')
+
+    if (Farmer.data) {
+      setStatus('success')
+
+      // CHECK VICINITY
+      let acc = 'QUIRINO' + (Account.vicinity_municipality || '') + (Account.vicinity_barangay || '')
+      let fmr = 'QUIRINO' + (Farmer.data.address_municipality || '') + (Farmer.data.address_barangay || '')
+      if (!fmr.includes(acc)) navigate('/your-account/information', { replace: true })
+    }
+
+    return () => setStatus('loading')
+  }, [Farmer.loading, Farmer.error, Farmer.data])
 
   // ON FETCH FARM
   React.useEffect(() => {

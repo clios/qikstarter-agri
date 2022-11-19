@@ -12,7 +12,7 @@ function SettlementAreaTabs(props) {
     <div className="tabs">
       <div className="tabs-header">
         <div className="tabs-title">Settlement Area</div>
-        <div className="tabs-system">Q-DRR MIS</div>
+        <div className="tabs-system">Q-Agri MIS</div>
         <div className="tabs-content">
           <Link className="tabs-item" to="/settlement-area/landslide" getProps={isPartiallyActive}>
             Landslide

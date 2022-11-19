@@ -194,7 +194,6 @@ function FarmerCreate() {
                   <option>QUIRINO</option>
                 </Select>
               </Field>
-              {/* {Account.vicinity_municipality === '' && ( */}
               <Field error={helper.address_municipality} label="Municipality" status={status}>
                 <Select
                   onChange={(e) => {
@@ -210,10 +209,8 @@ function FarmerCreate() {
                   ))}
                 </Select>
               </Field>
-              {/* )} */}
             </FormRow>
             <FormRow>
-              {/* {Account.vicinity_barangay === '' && ( */}
               <Field error={helper.address_barangay} label="Barangay" status={status}>
                 <Select onChange={(e) => setAddressBarangay(e.target.value)} value={address_barangay}>
                   <option value=""></option>
@@ -224,7 +221,6 @@ function FarmerCreate() {
                   ))}
                 </Select>
               </Field>
-              {/* )} */}
               <Field error={helper.address_purok} label="Purok" status={status}>
                 <Input uppercase onChange={(e) => setAddressPurok(e.target.value)} required size={20} type="text" value={address_purok} />
               </Field>

@@ -24,23 +24,6 @@ import axios from 'axios'
 import getUserById from '../api/getUserById'
 import { toast } from 'react-toastify'
 
-const User = {
-  data: {
-    id: 1,
-    name: 'CLIEMTOR B. FABROS',
-    email: 'cliemtor@devhaus.ph',
-    position: 'SYSTEM ADMINISTRATOR',
-    inactive: false,
-    office: 'DEVHAUS TECHNOLOGIES',
-    vicinity_barangay: '',
-    vicinity_municipality: '',
-    vicinity_province: 'QUIRINO',
-    permissions: ['read_users', 'write_users', 'read_tasks', 'write_tasks', 'read_dashboard', 'read_map'],
-    created_at: '2021-11-05T06:11:56.926268Z',
-    updated_at: '2021-11-05T06:11:56.926268Z'
-  }
-}
-
 function UserUpdate() {
   // SEND GET USER REQUEST
   const ROUTE = useParams()
@@ -79,8 +62,8 @@ function UserUpdate() {
       setEmail(User.data.email)
       setOffice(User.data.office)
       setPosition(User.data.position)
-      // setVicinityMunicipality(Help.formDataOrEmptyString(R.data.vicinity_municipality))
-      // setVicinityBarangay(Help.formDataOrEmptyString(R.data.vicinity_barangay))
+      setVicinityMunicipality(Help.formDataOrEmptyString(User.data.vicinity_municipality))
+      setVicinityBarangay(Help.formDataOrEmptyString(User.data.vicinity_barangay))
       setDeactivated(User.data.deactivated ? 'yes' : 'no')
       setReadFarmer(Help.checkPermission(User.data.permissions, 'read_farmer'))
       setWriteFarmer(Help.checkPermission(User.data.permissions, 'write_farmer'))
@@ -145,11 +128,11 @@ function UserUpdate() {
   return (
     <Authorization permissions={Account.permissions} permission="write_user">
       {/* {status === 'success' && (
-      <VicinityChecker
-        accountVicinity={Help.displayTags([Account.vicinity_province, Account.vicinity_municipality, Account.vicinity_barangay])}
-        recordAddress={Help.displayTags([User.data?.vicinity_province, User.data?.vicinity_municipality, User.data?.vicinity_barangay])}
-      />
-    )} */}
+        <VicinityChecker
+          accountVicinity={Help.displayTags([Account.vicinity_province, Account.vicinity_municipality, Account.vicinity_barangay])}
+          recordAddress={Help.displayTags([User.data?.vicinity_province, User.data?.vicinity_municipality, User.data?.vicinity_barangay])}
+        />
+      )} */}
       <PageContent>
         <FadeAnimation>
           <Form status={status}>

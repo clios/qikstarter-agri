@@ -35,6 +35,8 @@ function UserInformation() {
   const [deactivated, setDeactivated] = React.useState('')
   const [office, setOffice] = React.useState('')
   const [position, setPosition] = React.useState('')
+  const [vicinity_municipality, setVicinityMunicipality] = React.useState('')
+  const [vicinity_barangay, setVicinityBarangay] = React.useState('')
   const [permissions, setPermissions] = React.useState([])
   const [password, setPassword] = React.useState('')
   const [updated_at, setUpdatedAt] = React.useState('')
@@ -52,6 +54,8 @@ function UserInformation() {
       setOffice(User.data.office?.toUpperCase() || 'NOT FOUND')
       setPosition(User.data.position?.toUpperCase() || 'NOT FOUND')
       setPermissions(User.data.permissions)
+      setVicinityMunicipality(User.data.vicinity_municipality || 'ALL MUNICIPALITIES')
+      setVicinityBarangay(User.data.vicinity_barangay || 'ALL BARANGAYS')
       setUpdatedAt(Help.displayDateTime(User.data.updated_at))
       let entropy = new Entropy({ total: 1e6, risk: 1e9 }).string()
       let pass = entropy.substring(0, 8)
@@ -209,8 +213,8 @@ function UserInformation() {
               </div>
             </SectionHeader>
             <SectionBody>
-              <Field label="Municipality" status={status} text={`ALL MUNICIPALITIES`} />
-              <Field label="Barangay" status={status} text={`ALL BARANGAYS`} />
+              <Field label="Municipality" status={status} text={vicinity_municipality} />
+              <Field label="Barangay" status={status} text={vicinity_barangay} />
             </SectionBody>
             <SectionHeader title="4. Permissions">
               <div title="Read means the user can search, view and download records. Write means the user can create, update and delete records.">
@@ -254,7 +258,7 @@ function UserInformation() {
             <SectionBody status={status}>
               <div id="UserAccessTicket" className="uat">
                 <p className="uat-title">User Access Ticket</p>
-                <p className="uat-subtitle">Q-DRR MIS</p>
+                <p className="uat-subtitle">Q-Agri MIS</p>
                 <p className="uat-item">Name: {name}</p>
                 <p className="uat-item">Email: {email}</p>
                 <p className="uat-item">Password: {password}</p>

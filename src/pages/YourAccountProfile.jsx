@@ -26,6 +26,8 @@ function YourAccountProfile() {
   const [email, setEmail] = React.useState('')
   const [office, setOffice] = React.useState('')
   const [position, setPosition] = React.useState('')
+  const [vicinity_municipality, setVicinityMunicipality] = React.useState('')
+  const [vicinity_barangay, setVicinityBarangay] = React.useState('')
   const [permissions, setPermissions] = React.useState([])
   const [updated_at, setUpdatedAt] = React.useState('')
 
@@ -40,6 +42,8 @@ function YourAccountProfile() {
       setEmail(Account.data.email)
       setOffice(Account.data.office?.toUpperCase() || 'NOT FOUND')
       setPosition(Account.data.position?.toUpperCase() || 'NOT FOUND')
+      setVicinityMunicipality(Account.data.vicinity_municipality || 'ALL MUNICIPALITIES')
+      setVicinityBarangay(Account.data.vicinity_barangay || 'ALL BARANGAYS')
       setPermissions(Account.data.permissions)
       setUpdatedAt(Help.displayDateTime(Account.data.updated_at))
     }
@@ -66,7 +70,16 @@ function YourAccountProfile() {
             <Field label="Office" status={status} text={office} />
             <Field label="Position" status={status} text={position} />
           </SectionBody>
-          <SectionHeader title="3. Permissions">
+          <SectionHeader title="3. Vicinity">
+            <div title="Area limit of jurisdiction.">
+              <Information24 />
+            </div>
+          </SectionHeader>
+          <SectionBody>
+            <Field label="Municipality" status={status} text={vicinity_municipality} />
+            <Field label="Barangay" status={status} text={vicinity_barangay} />
+          </SectionBody>
+          <SectionHeader title="4. Permissions">
             <div title="Read means the user can search, view and download records. Write means the user can create, update and delete records.">
               <Information24 />
             </div>

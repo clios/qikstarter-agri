@@ -21,6 +21,7 @@ import SectionHeader from '../components/SectionHeader'
 import SubSection from '../components/SubSection'
 import SubSectionHeader from '../components/SubSectionHeader'
 import Toggle from '../fragments/FarmerInformation/Toggle'
+import VicinityChecker from '../components/VicinityChecker'
 import axios from 'axios'
 import { confirmAlert } from 'react-confirm-alert'
 import flood_high from '../geojson/flood_high.geojson'
@@ -403,12 +404,12 @@ function FarmerInformation() {
 
   return (
     <Authorization permissions={Account.permissions} permission="read_farmer">
-      {/* {status === 'success' && (
+      {status === 'success' && (
         <VicinityChecker
           accountVicinity={Help.displayTags([Account.vicinity_province, Account.vicinity_municipality, Account.vicinity_barangay])}
-          recordAddress={Help.displayTags([User.data?.vicinity_province, User.data?.vicinity_municipality, User.data?.vicinity_barangay])}
+          recordAddress={Help.displayTags([address_province, address_municipality, address_barangay])}
         />
-      )} */}
+      )}
       <PageContent status={status}>
         <FadeAnimation>
           <PaperView>
