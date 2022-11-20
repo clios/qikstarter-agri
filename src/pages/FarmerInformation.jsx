@@ -533,7 +533,9 @@ function FarmerInformation() {
             <SectionBody>
               <div id="farmer-map" className="map-container-farmer" />
             </SectionBody>
-            <SectionFooter status={status}>Last Update: {updated_at}</SectionFooter>
+            <SectionFooter status={status}>
+              Updated by {last_updated_by} - {updated_at}
+            </SectionFooter>
           </PaperView>
 
           {Help.checkPermission(Account.permissions, 'read_farm') && (
@@ -651,34 +653,34 @@ function FarmerInformation() {
                       </SectionBody>
                       <SubSectionHeader title="4.3 High Value Crops Area (ha)" />
                       <SectionBody>
-                        <Field label="Banana" status={status} text={item.hvc_banana_area} />
-                        <Field label="Cacao" status={status} text={item.hvc_cacao_area} />
-                        <Field label="Coffee" status={status} text={item.hvc_coffee_area} />
-                        <Field label="Fruit Trees" status={status} text={item.hvc_fruit_tree_area} />
-                        <Field label="Root Crops" status={status} text={item.hvc_root_crop_area} />
-                        <Field label="Spices" status={status} text={item.hvc_spice_area} />
-                        <Field label="Vegetables" status={status} text={item.hvc_vegetable_area} />
-                        <Field label="Total HVC Area" status={status} text={item.hvc_area} />
+                        <Field label="Banana" status={status} text={item.hvc_banana_area || 'NOT FOUND'} />
+                        <Field label="Cacao" status={status} text={item.hvc_cacao_area || 'NOT FOUND'} />
+                        <Field label="Coffee" status={status} text={item.hvc_coffee_area || 'NOT FOUND'} />
+                        <Field label="Fruit Trees" status={status} text={item.hvc_fruit_tree_area || 'NOT FOUND'} />
+                        <Field label="Root Crops" status={status} text={item.hvc_root_crop_area || 'NOT FOUND'} />
+                        <Field label="Spices" status={status} text={item.hvc_spice_area || 'NOT FOUND'} />
+                        <Field label="Vegetables" status={status} text={item.hvc_vegetable_area || 'NOT FOUND'} />
+                        <Field label="Total HVC Area" status={status} text={item.hvc_area || 'NOT FOUND'} />
                       </SectionBody>
                       <SubSectionHeader title="4.4 Livestock (head)" />
                       <SectionBody>
-                        <Field label="Carabao" status={status} text={item.livestock_carabaos} />
-                        <Field label="Cattle" status={status} text={item.livestock_cattles} />
-                        <Field label="Goat" status={status} text={item.livestock_goats} />
-                        <Field label="Pig" status={status} text={item.livestock_pigs} />
-                        <Field label="Sheep" status={status} text={item.livestock_sheeps} />
+                        <Field label="Carabao" status={status} text={item.livestock_carabaos || 'NOT FOUND'} />
+                        <Field label="Cattle" status={status} text={item.livestock_cattles || 'NOT FOUND'} />
+                        <Field label="Goat" status={status} text={item.livestock_goats || 'NOT FOUND'} />
+                        <Field label="Pig" status={status} text={item.livestock_pigs || 'NOT FOUND'} />
+                        <Field label="Sheep" status={status} text={item.livestock_sheeps || 'NOT FOUND'} />
                       </SectionBody>
                       <SubSectionHeader title="4.5 Poultry (head)" />
                       <SectionBody>
-                        <Field label="Chickens" status={status} text={item.poultry_chickens} />
-                        <Field label="Ducks" status={status} text={item.poultry_ducks} />
-                        <Field label="Gooses" status={status} text={item.poultry_gooses} />
-                        <Field label="Turkeys" status={status} text={item.poultry_turkeys} />
+                        <Field label="Chickens" status={status} text={item.poultry_chickens || 'NOT FOUND'} />
+                        <Field label="Ducks" status={status} text={item.poultry_ducks || 'NOT FOUND'} />
+                        <Field label="Gooses" status={status} text={item.poultry_gooses || 'NOT FOUND'} />
+                        <Field label="Turkeys" status={status} text={item.poultry_turkeys || 'NOT FOUND'} />
                       </SectionBody>
                       <SubSectionHeader title="4.6 Fish Pond" />
                       <SectionBody>
-                        <Field label="Total Area (sqm)" status={status} text={item.fishery_area} />
-                        <Field label="Qty. of Fingerlings (pcs)" status={status} text={item.fishery_fingerlings} />
+                        <Field label="Total Area (sqm)" status={status} text={item.fishery_area || 'NOT FOUND'} />
+                        <Field label="Qty. of Fingerlings (pcs)" status={status} text={item.fishery_fingerlings || 'NOT FOUND'} />
                       </SectionBody>
                       <SectionFooter status={status}>Last Update: {updated_at}</SectionFooter>
                     </SubSection>
