@@ -143,39 +143,39 @@ function PopulationPerCivilStatus(props) {
         <Table className="no-click" headers={['Civil Status', 'Male', 'Female', 'Total']}>
           <tr>
             <td>Single</td>
-            <td>{Help.displayNumberWithComma(farmers_single)}</td>
             <td>{Help.displayNumberWithComma(farmers_single_male)}</td>
             <td>{Help.displayNumberWithComma(farmers_single_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_single)}</td>
           </tr>
           <tr>
             <td>Living-In</td>
-            <td>{Help.displayNumberWithComma(farmers_living_in)}</td>
             <td>{Help.displayNumberWithComma(farmers_living_in_male)}</td>
             <td>{Help.displayNumberWithComma(farmers_living_in_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_living_in)}</td>
           </tr>
           <tr>
             <td>Married</td>
-            <td>{Help.displayNumberWithComma(farmers_married)}</td>
             <td>{Help.displayNumberWithComma(farmers_married_male)}</td>
             <td>{Help.displayNumberWithComma(farmers_married_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_married)}</td>
           </tr>
           <tr>
             <td>Divorced</td>
-            <td>{Help.displayNumberWithComma(farmers_divorced)}</td>
             <td>{Help.displayNumberWithComma(farmers_divorced_male)}</td>
             <td>{Help.displayNumberWithComma(farmers_divorced_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_divorced)}</td>
           </tr>
           <tr>
             <td>Separated</td>
-            <td>{Help.displayNumberWithComma(farmers_separated)}</td>
             <td>{Help.displayNumberWithComma(farmers_separated_male)}</td>
             <td>{Help.displayNumberWithComma(farmers_separated_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_separated)}</td>
           </tr>
           <tr>
             <td>Widowed</td>
-            <td>{Help.displayNumberWithComma(farmers_widowed)}</td>
             <td>{Help.displayNumberWithComma(farmers_widowed_male)}</td>
             <td>{Help.displayNumberWithComma(farmers_widowed_female)}</td>
+            <td>{Help.displayNumberWithComma(farmers_widowed)}</td>
           </tr>
           <tr className="text-green">
             <td>-</td>

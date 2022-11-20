@@ -636,52 +636,76 @@ function FarmerInformation() {
                           <Toggle available={item.fishery_area + item.fishery_fingerlings > 0} />
                         </Field>
                       </SectionBody>
-                      <SubSectionHeader title="4.1 Rice Area (ha)" />
-                      <SectionBody>
-                        <Field label="Irrigated" status={status} text="NOT FOUND" />
-                        <Field label="Rainfed" status={status} text="NOT FOUND" />
-                        <Field label="Upland" status={status} text="NOT FOUND" />
-                        <Field label="Total Rice Area" status={status} text={item.rice_area} />
-                      </SectionBody>
-                      <SubSectionHeader title="4.2 Corn Area (ha)" />
-                      <SectionBody>
-                        <Field label="Lower Vega" status={status} text="NOT FOUND" />
-                        <Field label="Upper Vega" status={status} text="NOT FOUND" />
-                        <Field label="Broad Plain" status={status} text="NOT FOUND" />
-                        <Field label="Hilly Areas" status={status} text="NOT FOUND" />
-                        <Field label="Total Corn Area" status={status} text={item.corn_area} />
-                      </SectionBody>
-                      <SubSectionHeader title="4.3 High Value Crops Area (ha)" />
-                      <SectionBody>
-                        <Field label="Banana" status={status} text={item.hvc_banana_area || 'NOT FOUND'} />
-                        <Field label="Cacao" status={status} text={item.hvc_cacao_area || 'NOT FOUND'} />
-                        <Field label="Coffee" status={status} text={item.hvc_coffee_area || 'NOT FOUND'} />
-                        <Field label="Fruit Trees" status={status} text={item.hvc_fruit_tree_area || 'NOT FOUND'} />
-                        <Field label="Root Crops" status={status} text={item.hvc_root_crop_area || 'NOT FOUND'} />
-                        <Field label="Spices" status={status} text={item.hvc_spice_area || 'NOT FOUND'} />
-                        <Field label="Vegetables" status={status} text={item.hvc_vegetable_area || 'NOT FOUND'} />
-                        <Field label="Total HVC Area" status={status} text={item.hvc_area || 'NOT FOUND'} />
-                      </SectionBody>
-                      <SubSectionHeader title="4.4 Livestock (head)" />
-                      <SectionBody>
-                        <Field label="Carabao" status={status} text={item.livestock_carabaos || 'NOT FOUND'} />
-                        <Field label="Cattle" status={status} text={item.livestock_cattles || 'NOT FOUND'} />
-                        <Field label="Goat" status={status} text={item.livestock_goats || 'NOT FOUND'} />
-                        <Field label="Pig" status={status} text={item.livestock_pigs || 'NOT FOUND'} />
-                        <Field label="Sheep" status={status} text={item.livestock_sheeps || 'NOT FOUND'} />
-                      </SectionBody>
-                      <SubSectionHeader title="4.5 Poultry (head)" />
-                      <SectionBody>
-                        <Field label="Chickens" status={status} text={item.poultry_chickens || 'NOT FOUND'} />
-                        <Field label="Ducks" status={status} text={item.poultry_ducks || 'NOT FOUND'} />
-                        <Field label="Gooses" status={status} text={item.poultry_gooses || 'NOT FOUND'} />
-                        <Field label="Turkeys" status={status} text={item.poultry_turkeys || 'NOT FOUND'} />
-                      </SectionBody>
-                      <SubSectionHeader title="4.6 Fish Pond" />
-                      <SectionBody>
-                        <Field label="Total Area (sqm)" status={status} text={item.fishery_area || 'NOT FOUND'} />
-                        <Field label="Qty. of Fingerlings (pcs)" status={status} text={item.fishery_fingerlings || 'NOT FOUND'} />
-                      </SectionBody>
+                      {item.rice_area > 0 && (
+                        <React.Fragment>
+                          <SubSectionHeader title="4.1 Rice Area (ha)" />
+                          <SectionBody>
+                            <Field label="Irrigated" status={status} text="NOT FOUND" />
+                            <Field label="Rainfed" status={status} text="NOT FOUND" />
+                            <Field label="Upland" status={status} text="NOT FOUND" />
+                            <Field label="Total Rice Area" status={status} text={item.rice_area || 'NOT FOUND'} />
+                          </SectionBody>
+                        </React.Fragment>
+                      )}
+                      {item.corn_area > 0 && (
+                        <React.Fragment>
+                          <SubSectionHeader title="4.2 Corn Area (ha)" />
+                          <SectionBody>
+                            <Field label="Lower Vega" status={status} text="NOT FOUND" />
+                            <Field label="Upper Vega" status={status} text="NOT FOUND" />
+                            <Field label="Broad Plain" status={status} text="NOT FOUND" />
+                            <Field label="Hilly Areas" status={status} text="NOT FOUND" />
+                            <Field label="Total Corn Area" status={status} text={item.corn_area || 'NOT FOUND'} />
+                          </SectionBody>
+                        </React.Fragment>
+                      )}
+                      {item.hvc_area > 0 && (
+                        <React.Fragment>
+                          <SubSectionHeader title="4.3 High Value Crops Area (ha)" />
+                          <SectionBody>
+                            <Field label="Banana" status={status} text={item.hvc_banana_area || 'NOT FOUND'} />
+                            <Field label="Cacao" status={status} text={item.hvc_cacao_area || 'NOT FOUND'} />
+                            <Field label="Coffee" status={status} text={item.hvc_coffee_area || 'NOT FOUND'} />
+                            <Field label="Fruit Trees" status={status} text={item.hvc_fruit_tree_area || 'NOT FOUND'} />
+                            <Field label="Root Crops" status={status} text={item.hvc_root_crop_area || 'NOT FOUND'} />
+                            <Field label="Spices" status={status} text={item.hvc_spice_area || 'NOT FOUND'} />
+                            <Field label="Vegetables" status={status} text={item.hvc_vegetable_area || 'NOT FOUND'} />
+                            <Field label="Total HVC Area" status={status} text={item.hvc_area || 'NOT FOUND'} />
+                          </SectionBody>
+                        </React.Fragment>
+                      )}
+                      {item.livestock_carabaos + item.livestock_cattles + item.livestock_goats + item.livestock_pigs + item.livestock_sheeps > 0 && (
+                        <React.Fragment>
+                          <SubSectionHeader title="4.4 Livestock (head)" />
+                          <SectionBody>
+                            <Field label="Carabao" status={status} text={item.livestock_carabaos || 'NOT FOUND'} />
+                            <Field label="Cattle" status={status} text={item.livestock_cattles || 'NOT FOUND'} />
+                            <Field label="Goat" status={status} text={item.livestock_goats || 'NOT FOUND'} />
+                            <Field label="Pig" status={status} text={item.livestock_pigs || 'NOT FOUND'} />
+                            <Field label="Sheep" status={status} text={item.livestock_sheeps || 'NOT FOUND'} />
+                          </SectionBody>
+                        </React.Fragment>
+                      )}
+                      {item.poultry_chickens + item.poultry_ducks + item.poultry_gooses + item.poultry_turkeys > 0 && (
+                        <React.Fragment>
+                          <SubSectionHeader title="4.5 Poultry (head)" />
+                          <SectionBody>
+                            <Field label="Chickens" status={status} text={item.poultry_chickens || 'NOT FOUND'} />
+                            <Field label="Ducks" status={status} text={item.poultry_ducks || 'NOT FOUND'} />
+                            <Field label="Gooses" status={status} text={item.poultry_gooses || 'NOT FOUND'} />
+                            <Field label="Turkeys" status={status} text={item.poultry_turkeys || 'NOT FOUND'} />
+                          </SectionBody>
+                        </React.Fragment>
+                      )}
+                      {item.fishery_area + item.fishery_fingerlings > 0 && (
+                        <React.Fragment>
+                          <SubSectionHeader title="4.6 Fish Pond" />
+                          <SectionBody>
+                            <Field label="Total Area (sqm)" status={status} text={item.fishery_area || 'NOT FOUND'} />
+                            <Field label="Qty. of Fingerlings (pcs)" status={status} text={item.fishery_fingerlings || 'NOT FOUND'} />
+                          </SectionBody>
+                        </React.Fragment>
+                      )}
                       <SectionFooter status={status}>
                         Updated by {item.last_updated_by} - {Help.displayDateTime(item.updated_at)}
                       </SectionFooter>
