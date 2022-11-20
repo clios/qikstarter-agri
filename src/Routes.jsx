@@ -22,6 +22,7 @@ import IncidentDashboard from './pages/IncidentDashboard'
 import IncidentInformation from './pages/IncidentInformation'
 import IncidentRecords from './pages/IncidentRecords'
 import IncidentTabs from './layouts/IncidentTabs'
+import PageNotFound from './pages/PageNotFound'
 import PopulationDashboard from './pages/PopulationDashboard'
 import PopulationTabs from './layouts/PopulationTabs'
 import React from 'react'
@@ -113,6 +114,8 @@ function Routes() {
           <UserInformation path="/records/:user_id" />
           <UserUpdate path="/records/:user_id/edit" />
         </UserTabs>
+
+        <PageNotFound path="/404" />
       </Sider>
     </Router>
   )

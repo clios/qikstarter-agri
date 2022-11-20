@@ -8,7 +8,7 @@ function VicinityChecker(props) {
   if (record_address.includes(account_vicinity)) {
     return null
   } else {
-    return <Redirect to="/your-account/information" noThrow replace />
+    return <Redirect to="/404" noThrow replace />
   }
 }
 

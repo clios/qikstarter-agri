@@ -7,7 +7,7 @@ function Authorization(props) {
   return (
     <React.Fragment>
       {!Help.checkPermission(props.permissions, props.permission) ? (
-        <Redirect to="/your-account/information" noThrow replace />
+        <Redirect to="/404" noThrow replace />
       ) : (
         <FadeAnimation>{props.children}</FadeAnimation>
       )}

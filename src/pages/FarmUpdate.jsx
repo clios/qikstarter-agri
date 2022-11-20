@@ -110,7 +110,7 @@ function FarmUpdate() {
       // CHECK VICINITY
       let acc = 'QUIRINO' + (Account.vicinity_municipality || '') + (Account.vicinity_barangay || '')
       let fmr = 'QUIRINO' + (Farmer.data.address_municipality || '') + (Farmer.data.address_barangay || '')
-      if (!fmr.includes(acc)) navigate('/your-account/information', { replace: true })
+      if (!fmr.includes(acc)) navigate('/404', { replace: true })
     }
 
     return () => setStatus('loading')

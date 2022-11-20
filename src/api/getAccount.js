@@ -20,7 +20,7 @@ export default function getAccount(should_fetch, swr_options) {
 
   const { data, error } = useSWR(should_fetch ? url : null, fetcher, {
     onError: (error) => {
-      if (error?.response?.status === 404) navigate('/your-account/information', { replace: true })
+      if (error?.response?.status === 404) navigate('/404', { replace: true })
     },
     onErrorRetry: (error) => {
       if (error.status === 404) return
