@@ -682,7 +682,9 @@ function FarmerInformation() {
                         <Field label="Total Area (sqm)" status={status} text={item.fishery_area || 'NOT FOUND'} />
                         <Field label="Qty. of Fingerlings (pcs)" status={status} text={item.fishery_fingerlings || 'NOT FOUND'} />
                       </SectionBody>
-                      <SectionFooter status={status}>Last Update: {updated_at}</SectionFooter>
+                      <SectionFooter status={status}>
+                        Updated by {item.last_updated_by} - {Help.displayDateTime(item.updated_at)}
+                      </SectionFooter>
                     </SubSection>
                   )
                 })}
