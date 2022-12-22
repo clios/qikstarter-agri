@@ -42,8 +42,8 @@ function TotalFarmers(props) {
             <VictoryTooltip cornerRadius={0} flyoutPadding={{ left: 20, right: 20, bottom: 10, top: 10 }} style={{ fontSize: '16px' }} />
           }
           data={[
-            { x: 'Female', y: total_farmers_male },
-            { x: 'Male', y: total_farmers_female }
+            { x: 'Female', y: total_farmers_female },
+            { x: 'Male', y: total_farmers_male }
           ]}
           height={150}
           labels={() => null}
